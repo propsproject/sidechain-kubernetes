@@ -10,7 +10,3 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  selector:
-    matchExpressions:
-      - { key: Environment, operator: In, values: [production] }
-      - { key: Service, operator: In, values: [sawtooth-metrics] }
