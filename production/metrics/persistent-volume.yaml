@@ -7,6 +7,8 @@ spec:
     storage: 5Gi
   accessModes:
     - ReadWriteOnce
+  claimRef:
+    name: sawtooth-metrics-pvc
   awsElasticBlockStore:
     fsType: ext4
     volumeID: vol-0324532b9d24ef31f
