@@ -10,3 +10,7 @@ spec:
   resources:
     requests:
       storage: 5Gi
+  selector:
+    matchLabels:
+      Environment: production
+      Service: sawtooth-metrics
