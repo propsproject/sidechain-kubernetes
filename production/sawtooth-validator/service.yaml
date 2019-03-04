@@ -1,0 +1,20 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: sawtooth-validator
+  annotations:
+    dns.alpha.kubernetes.io/external: "validator.sidechain.propsproject.io"
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "90"
+spec:
+  type: LoadBalancer
+  selector:
+    app: sawtooth-validator
+  ports:
+    - name: "4004"
+      protocol: TCP
+      port: 4004
+      targetPort: 4004
+    - name: "8800"
+      protocol: TCP
+      port: 8800
+      targetPort: 8800

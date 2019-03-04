@@ -1,0 +1,31 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: sawtooth-metrics
+  annotations:
+    dns.alpha.kubernetes.io/external: "metrics-staging.sidechain.propsproject.io"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:us-east-1:774122189772:certificate/ac83b6fe-4bdc-4392-84ce-0cea5e692b50"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
+    service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: '443'
+spec:
+  type: LoadBalancer
+  selector:
+    app: sawtooth-metrics
+  ports:
+    - name: "443"
+      protocol: TCP
+      port: 443
+      targetPort: 3000
+    - name: "8086"
+      protocol: TCP
+      port: 8086
+      targetPort: 8086
+    - name: "8083"
+      protocol: TCP
+      port: 8083
+      targetPort: 8083
+    - name: "2003"
+      protocol: TCP
+      port: 2003
+      targetPort: 2003

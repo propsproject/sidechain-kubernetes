@@ -1,0 +1,35 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: sawtooth-restapi
+  labels:
+    app: sawtooth-restapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sawtooth-restapi
+  template:
+    metadata:
+      labels:
+        app: sawtooth-restapi
+    spec:
+      containers:
+        - name: sawtooth-rest-api
+          image: hyperledger/sawtooth-rest-api:1.0
+          ports:
+            - name: api
+              containerPort: 8008
+          envFrom:
+            - configMapRef:
+                name: general-config
+          command:
+            - bash
+          args:
+            - -c
+            - "echo opentsdb_username = \"${OPENTSDB_USERNAME}\" >> /etc/sawtooth/tmp.toml && \
+               echo opentsdb_password = \"${OPENTSDB_PW}\" >> /etc/sawtooth/tmp.toml && \
+               sawtooth-rest-api -C tcp://sawtooth-validator:4004 \
+               --opentsdb-url ${OPENTSDB_URL} \
+               --opentsdb-db ${OPENTSDB_DB} \
+               --bind 0.0.0.0:8008"

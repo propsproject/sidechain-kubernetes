@@ -1,0 +1,7 @@
+---
+apiVersion: v1
+data:
+  START_UP_SCRIPT: "https://raw.githubusercontent.com/propsproject/sidechain-kubernetes/master/staging/scripts/sawtooth-validator/validator.sh"
+kind: ConfigMap
+metadata:
+  name: sawtooth-validator

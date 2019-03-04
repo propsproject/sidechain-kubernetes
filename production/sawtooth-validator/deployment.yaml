@@ -1,0 +1,48 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: sawtooth-validator
+  labels:
+    app: sawtooth-validator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sawtooth-validator
+  template:
+    metadata:
+      labels:
+        app: sawtooth-validator
+    spec:
+      nodeSelector:
+        nodetier: "1"
+      containers:
+        - name: sawtooth-validator
+          image: hyperledger/sawtooth-validator:1.0
+          ports:
+            - name: tp
+              containerPort: 4004
+
+            - name: consensus
+              containerPort: 5050
+
+            - name: validators
+              containerPort: 8800
+          command:
+            - bash
+          args:
+            - -c
+            - "apt-get update && apt-get -y install curl && curl -s ${START_UP_SCRIPT} | bash"
+          envFrom:
+            - configMapRef:
+                name: sawtooth-validator
+          env:
+            - name: SAWTOOTH_HOME
+              value: "/opt/sawtooth"
+          volumeMounts:
+            - name: sawtooth-validator
+              mountPath: "/opt/sawtooth"
+      volumes:
+        - name: sawtooth-validator
+          persistentVolumeClaim:
+            claimName: validator1

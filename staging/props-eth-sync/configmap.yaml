@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: props-eth-sync
+data:
+  "SAWTOOTH_PUB": "039beeb76f0b91811ef69b080ad6bf0fb383a7e775e2989c0c2b2d0dd0be36fddb"

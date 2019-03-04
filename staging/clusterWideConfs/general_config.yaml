@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: general-config
+data:
+  #system wide services info
+  "ENVIRONMENT": "staging"
+  "NODE_ENV": "staging"
+  "APP": "sidechain"
+  "PROPS_TOKEN_CONTRACT_ADDRESS": "0x98F8ab77bE1658B398F050338B0c6f3F6C025D4A"
+  "VALIDATOR_URL": "tcp://sawtooth-validator:4004"
+  "SAWTOOTH_REST_URL": "sawtooth-restapi"
+  "SAWTOOTH_REST_PORT": "8008"
+  "SAWTOOTH_REST_HTTPS": "false"
+  "ETHEREUM_CONFIRMATION_BLOCKS": "15"
+  "PROPS_TOKEN_DEPLOYED_BLOCK": "3950142"
+  "OPENTSDB_PW": "lrdata"
+  "OPENTSDB_USERNAME": "lrdatapw"
+  "OPENTSDB_DB": "metrics"
+  "OPENTSDB_URL": "http://sawtooth-metrics:8086"
+

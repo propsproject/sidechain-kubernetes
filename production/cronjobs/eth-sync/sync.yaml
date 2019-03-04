@@ -1,0 +1,24 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: eth-sync
+spec:
+  schedule: "* * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: eth-sync
+              image: byrnedo/alpine-curl:0.1.3
+              command:
+                - "/bin/sh"
+                - "-ec"
+                - |
+                  echo "Automated earnings test"
+                  curl -v "http://props-eth-sync-api:3000/eth-sync/sync"
+                  echo
+                  echo "Call Complete"
+                  echo

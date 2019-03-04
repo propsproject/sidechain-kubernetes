@@ -1,0 +1,47 @@
+apiVersion: apps/v1beta2 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: props-eth-sync-api
+  labels:
+    app: props-eth-sync-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: props-eth-sync-api
+  template:
+    metadata:
+      labels:
+        app: props-eth-sync-api
+    spec:
+      nodeSelector:
+        nodetier: "1"
+      containers:
+      - name: props-eth-sync-api
+        image: 774122189772.dkr.ecr.us-east-1.amazonaws.com/props-eth-sync-staging-sidechain
+        imagePullPolicy: Always
+        env:
+        - name: SERVICE_NAME
+          value: "api"
+        - name: DOGSTATSD_HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        envFrom:
+        - secretRef:
+            name: props-eth-sync-secrets
+        - secretRef:
+            name: global-secrets
+        - configMapRef:
+            name: props-eth-sync
+        - configMapRef:
+            name: general-config
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            memory: 100Mi
+            cpu: 0.1
+          limits:
+            memory: 1000Mi
+            cpu: 1

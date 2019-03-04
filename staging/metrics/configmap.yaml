@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+data:
+  INFLUXDB_ADMIN_ENABLED: "true"
+  INFLUXDB_HTTP_AUTH_ENABLED: "true"
+  INFLUXDB_ADMIN_PASSWORD: "admin"
+  INFLUXDB_ADMIN_USER: "admin"
+  INFLUXDB_DATA_DIR: "/influxdb/data"
+  INFLUXDB_DATA_WAL_DIR: "/influxdb/wal"
+  INFLUXDB_META_DIR: "/influxdb/meta"
+kind: ConfigMap
+metadata:
+  name: metrics-config
