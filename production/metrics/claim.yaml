@@ -11,8 +11,6 @@ spec:
     requests:
       storage: 5Gi
   selector:
-    matchLabels:
-      Environment: production
-      Service: sawtooth-metrics
     matchExpressions:
       - { key: Environment, operator: In, values: [production] }
+      - { key: Service, operator: In, values: [sawtooth-metrics] }
