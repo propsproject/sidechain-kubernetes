@@ -37,7 +37,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: OPENTSDB_PW
-                  name: general-config
+                  name: global-secrets
             - name: INFLUXDB_DB
               valueFrom:
                 configMapKeyRef:
