@@ -21,6 +21,9 @@ spec:
           ports:
             - name: http
               containerPort: 3000
+          volumeMounts:
+            - name: sawtooth-metrics
+              mountPath: "/var/lib/grafana"
 
         - name: metrics-influxdb
           image: influxdb
@@ -59,3 +62,6 @@ spec:
       volumes:
         - name: metrics
           emptyDir: {}
+        - name: sawtooth-metrics
+          persistentVolumeClaim:
+            claimName: sawtooth-metrics
