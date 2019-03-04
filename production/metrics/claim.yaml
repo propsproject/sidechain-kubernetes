@@ -14,3 +14,5 @@ spec:
     matchLabels:
       Environment: production
       Service: sawtooth-metrics
+    matchExpressions:
+      - { key: Environment, operator: In, values: [production] }
