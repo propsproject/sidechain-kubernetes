@@ -27,8 +27,8 @@ spec:
             - "/bin/bash"
             - "-ec"
             - |
-              echo opentsdb_username = \"${OPENTSDB_USERNAME}\" >> /etc/sawtooth/rest_api.toml
-              echo opentsdb_password = \"${OPENTSDB_PW}\" >> /etc/sawtooth/rest_api.toml &&
+              echo "opentsdb_username = \"${OPENTSDB_USERNAME}\" >> /etc/sawtooth/rest_api.toml"
+              echo "opentsdb_password = \"${OPENTSDB_PW}\" >> /etc/sawtooth/rest_api.toml"
               sawtooth-rest-api -C tcp://sawtooth-validator:4004 \
                              --opentsdb-url ${OPENTSDB_URL} \
                              --opentsdb-db ${OPENTSDB_DB} \
