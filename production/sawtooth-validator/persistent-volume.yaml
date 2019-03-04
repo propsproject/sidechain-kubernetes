@@ -7,6 +7,9 @@ spec:
     storage: 300Gi
   accessModes:
     - ReadWriteOnce
+  claimRef:
+    name: validator1
+    namespace: default
   awsElasticBlockStore:
     fsType: ext4
     volumeID: vol-0d9bfe6fbdb1ca996
