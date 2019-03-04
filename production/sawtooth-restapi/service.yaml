@@ -21,8 +21,3 @@ spec:
       protocol: TCP
       port: 8008
       targetPort: 8008
-  loadBalancerSourceRanges:
-    - "52.45.197.180/32"
-    - "52.45.115.108/32"
-    - "35.174.190.243/32"
-    - "10.3.0.0/16"
