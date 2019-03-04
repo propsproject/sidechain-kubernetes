@@ -23,6 +23,12 @@ spec:
           envFrom:
             - configMapRef:
                 name: general-config
+          env:
+            - name: OPENTSDB_PW
+              valueFrom:
+                secretKeyRef:
+                  key: OPENTSDB_PW
+                  name: global-secrets
           command:
             - "/bin/bash"
             - "-ec"

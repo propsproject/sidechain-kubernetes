@@ -35,7 +35,7 @@ spec:
                   name: general-config
             - name: INFLUXDB_USER_PASSWORD
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   key: OPENTSDB_PW
                   name: general-config
             - name: INFLUXDB_DB
