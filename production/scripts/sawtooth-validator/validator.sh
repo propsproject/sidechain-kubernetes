@@ -4,11 +4,6 @@ apt-get install bash curl -y
 
 #!/bin/bash
 
-if [ ! -e "$SAWTOOTH_HOME/validator.toml" ]; then
-    echo ${OPENTSDB_USERNAME} >> $SAWTOOTH_HOME/validator.toml
-    echo ${OPENTSDB_PW} >> $SAWTOOTH_HOME/validator.toml
-fi
-
 if [ ! -e "$SAWTOOTH_HOME/logs" ]; then
     mkdir -p $SAWTOOTH_HOME/logs
 fi
@@ -28,6 +23,16 @@ fi
 if [ ! -e "$SAWTOOTH_HOME/etc" ]; then
     mkdir -p $SAWTOOTH_HOME/etc
 fi
+
+if [ ! -e "$SAWTOOTH_HOME/etc/validator.toml" ]; then
+    touch $SAWTOOTH_HOME/etc/validator.toml
+    echo "opentsdb_url = \"${OPENTSDB_URL}\"" >> $SAWTOOTH_HOME/etc/validator.toml
+    echo "opentsdb_db = \"${OPENTSDB_DB}\"" >> $SAWTOOTH_HOME/etc/validator.toml
+    echo "opentsdb_username = \"${OPENTSDB_USERNAME}\"" >> $SAWTOOTH_HOME/etc/validator.toml
+    echo "opentsdb_password = \"${OPENTSDB_PW}\"" >> $SAWTOOTH_HOME/etc/validator.toml
+    cat $SAWTOOTH_HOME/etc/validator.toml
+fi
+
 
 if [ ! -e "$SAWTOOTH_HOME/logs/validator-debug.log" ]; then
     touch $SAWTOOTH_HOME/logs/validator-debug.log
@@ -86,5 +91,5 @@ sawtooth-validator  \
     --endpoint tcp://$PROPSCHAIN_VALIDATOR_SERVICE_HOST:8800 \
     --bind component:tcp://eth0:4004 \
     --bind network:tcp://eth0:8800 \
-#    --opentsdb-url http://sawtooth-metrics:8086 \
-#    --opentsdb-db metrics \
+    --opentsdb-url http://sawtooth-metrics:8086 \
+    --opentsdb-db metrics

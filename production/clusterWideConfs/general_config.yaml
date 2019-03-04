@@ -14,3 +14,6 @@ data:
   "SAWTOOTH_REST_HTTPS": "false"
   "ETHEREUM_CONFIRMATION_BLOCKS": "15"
   "PROPS_TOKEN_DEPLOYED_BLOCK": "3855895"
+  "OPENTSDB_USERNAME": "lrdata"
+  "OPENTSDB_DB": "metrics"
+  "OPENTSDB_URL": "http://sawtooth-metrics:8086"
