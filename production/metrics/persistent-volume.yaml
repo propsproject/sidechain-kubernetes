@@ -9,6 +9,7 @@ spec:
     - ReadWriteOnce
   claimRef:
     name: sawtooth-metrics-pvc
+    namespace: default
   awsElasticBlockStore:
     fsType: ext4
     volumeID: vol-0324532b9d24ef31f
