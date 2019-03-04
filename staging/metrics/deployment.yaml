@@ -64,4 +64,4 @@ spec:
           emptyDir: {}
         - name: sawtooth-metrics
           persistentVolumeClaim:
-            claimName: sawtooth-metrics
+            claimName: sawtooth-metrics-pvc

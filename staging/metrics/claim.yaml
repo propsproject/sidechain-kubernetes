@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: sawtooth-metrics
+  name: sawtooth-metrics-pvc
   labels:
     type: amazonEBS
 spec:
