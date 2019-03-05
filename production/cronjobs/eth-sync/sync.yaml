@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: eth-sync
 spec:
-  schedule: "*/5 * * * *"
+  schedule: "* * * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
