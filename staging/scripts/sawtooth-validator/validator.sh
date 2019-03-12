@@ -1,27 +1,63 @@
-#!/bin/sh
-apt-get update
-apt-get install bash curl -y
-
 #!/bin/bash
 
-if [ ! -e "$SAWTOOTH_HOME/logs" ]; then
+if [ ! -d "$SAWTOOTH_HOME/logs" ]; then
     mkdir -p $SAWTOOTH_HOME/logs
 fi
 
-if [ ! -e "$SAWTOOTH_HOME/keys" ]; then
+if [ ! -d "$SAWTOOTH_HOME/keys" ]; then
     mkdir -p $SAWTOOTH_HOME/keys
 fi
 
-if [ ! -e "$SAWTOOTH_HOME/policy" ]; then
+if [ ! -d "$SAWTOOTH_HOME/policy" ]; then
     mkdir -p $SAWTOOTH_HOME/policy
 fi
 
-if [ ! -e "$SAWTOOTH_HOME/data" ]; then
+if [ ! -d "$SAWTOOTH_HOME/data" ]; then
     mkdir -p $SAWTOOTH_HOME/data
 fi
 
-if [ ! -e "$SAWTOOTH_HOME/etc" ]; then
+if [ ! -d "$SAWTOOTH_HOME/etc" ]; then
     mkdir -p $SAWTOOTH_HOME/etc
+fi
+
+mkdir -p /poet-shared/validator-0 || true
+cp -a $SAWTOOTH_HOME/keys /poet-shared/validator-0
+
+while [ ! -f /poet-shared/poet-enclave-measurement ]; do
+    echo 'waiting for poet-enclave-measurement';
+    sleep 1;
+done
+
+while [ ! -f /poet-shared/poet-enclave-basename ]; do
+    echo 'waiting for poet-enclave-basename';
+    sleep 1;
+done
+
+while [ ! -f /poet-shared/poet.batch ]; do
+    echo 'waiting for poet.batch';
+    sleep 1;
+done
+
+cp /poet-shared/poet.batch /
+
+if [ ! -e config-genesis.batch ]; then
+    sawset genesis -k $SAWTOOTH_HOME/keys/validator.priv -o config-genesis.batch;
+fi
+
+if [ ! -e config.batch ]; then
+    sawset proposal create \
+    -k $SAWTOOTH_HOME/keys/validator.priv \
+    sawtooth.consensus.algorithm.name=PoET \
+    sawtooth.consensus.algorithm.version=0.1 \
+    sawtooth.poet.report_public_key_pem=\"$(cat /poet-shared/simulator_rk_pub.pem)\" \
+    sawtooth.poet.valid_enclave_measurements=$(cat /poet-shared/poet-enclave-measurement) \
+    sawtooth.poet.valid_enclave_basenames=$(cat /poet-shared/poet-enclave-basename) \
+    sawtooth.poet.initial_wait_time=15 \
+    sawtooth.poet.target_wait_time=15 \
+    sawtooth.publisher.max_batches_per_block=200 \
+    sawtooth.poet.key_block_claim_limit=100000 \
+    sawtooth.poet.ztest_minimum_win_count=100000 \
+    -o config.batch;
 fi
 
 if [ ! -e "$SAWTOOTH_HOME/etc/validator.toml" ]; then
@@ -33,21 +69,17 @@ if [ ! -e "$SAWTOOTH_HOME/etc/validator.toml" ]; then
     cat $SAWTOOTH_HOME/etc/validator.toml
 fi
 
-
 if [ ! -e "$SAWTOOTH_HOME/logs/validator-debug.log" ]; then
     touch $SAWTOOTH_HOME/logs/validator-debug.log
 fi
 
-if [ ! -e "$SAWTOOTH_HOME/keys/validator.priv" ]; then
-    sawadm keygen;
-fi
-
 if [ ! -e "$SAWTOOTH_HOME/data/block-chain-id" ]; then
-    sawadm genesis
+    sawadm config-genesis.batch config.batch poet.batch;
 fi
 
-poet enclave basename --enclave-module simulator
-poet registration create --enclave-module simulator
+if [ ! -e /root/.sawtooth/keys/my_key.priv ]; then
+   sawtooth keygen my_key; \
+fi
 
 SH="$SAWTOOTH_HOME"
 env="$ENVIRONMENT"
@@ -90,6 +122,7 @@ EOF
 sawtooth-validator  \
     --endpoint tcp://$PROPSCHAIN_VALIDATOR_SERVICE_HOST:8800 \
     --bind component:tcp://eth0:4004 \
+    --bind consensus:tcp://eth0:5050 \
     --bind network:tcp://eth0:8800 \
     --opentsdb-url http://sawtooth-metrics:8086 \
     --opentsdb-db metrics

@@ -18,3 +18,9 @@ spec:
       protocol: TCP
       port: 8800
       targetPort: 8800
+  loadBalancerSourceRanges:
+    - "34.198.32.89/32"
+    - "10.0.0.0/16"
+    - "3.87.177.84/32"
+    - "52.202.115.169/32"
+    - "18.210.158.1/32"

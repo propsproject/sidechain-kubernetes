@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sawtooth-poet
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: sawtooth-poet-validator-registry-tp
-          image: hyperledger/sawtooth-poet-validator-registry-tp:1.0
+          image: hyperledger/sawtooth-poet-validator-registry-tp:1.1.4
           command:
             - bash
           args:
