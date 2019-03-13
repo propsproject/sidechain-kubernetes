@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: sawtooth-poet-engine
-          image: hyperledger/sawtooth-poet-engine:1.1.4
+          image: hyperledger/sawtooth-poet-engine:1.1.2
           command:
             - bash
           args:
