@@ -20,4 +20,4 @@ done
 cp -a /poet-shared/validator-0/keys /etc/sawtooth
 poet registration create -k /etc/sawtooth/keys/validator.priv -o /poet-shared/poet.batch
 
-poet-engine -C tcp://sawtooth-validator:5050 --component tcp://sawtooth-validator:4004
+poet-engine -C tcp://sawtooth-poet:5050 --component tcp://sawtooth-validator:4004
