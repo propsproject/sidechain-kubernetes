@@ -75,7 +75,7 @@ if [ ! -e "$SAWTOOTH_HOME/logs/validator-debug.log" ]; then
 fi
 
 if [ ! -e "$SAWTOOTH_HOME/data/block-chain-id" ]; then
-    sawadm config-genesis.batch config.batch poet.batch;
+    sawadm genesis config-genesis.batch config.batch poet.batch;
 fi
 
 if [ ! -e /root/.sawtooth/keys/my_key.priv ]; then
