@@ -32,4 +32,5 @@ spec:
               mountPath: "/poet-shared"
       volumes:
         - name: poet-shared-0
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: sawtooth-poet-engine-disk

@@ -55,3 +55,6 @@ spec:
         - name: sawtooth-validator
           persistentVolumeClaim:
             claimName: validator1
+        - name: poet-shared-0
+          persistentVolumeClaim:
+            claimName: sawtooth-poet-engine-disk

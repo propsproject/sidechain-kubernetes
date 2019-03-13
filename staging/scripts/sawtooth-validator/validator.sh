@@ -6,6 +6,7 @@ fi
 
 if [ ! -d "$SAWTOOTH_HOME/keys" ]; then
     mkdir -p $SAWTOOTH_HOME/keys
+    sawadm keygen;
 fi
 
 if [ ! -d "$SAWTOOTH_HOME/policy" ]; then
