@@ -6,7 +6,7 @@ metadata:
     type: amazonEBS
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   storageClassName: standard
   resources:
     requests:
