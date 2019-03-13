@@ -30,3 +30,6 @@ spec:
           volumeMounts:
             - name: poet-shared-0
               mountPath: "/poet-shared"
+      volumes:
+        - name: poet-shared-0
+          emptyDir: {}
