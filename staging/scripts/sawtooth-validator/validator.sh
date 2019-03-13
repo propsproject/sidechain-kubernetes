@@ -50,7 +50,7 @@ if [ ! -e config.batch ]; then
     -k $SAWTOOTH_HOME/keys/validator.priv \
     sawtooth.consensus.algorithm.name=PoET \
     sawtooth.consensus.algorithm.version=0.1 \
-    sawtooth.poet.report_public_key_pem=\"$(cat /poet-shared/simulator_rk_pub.pem)\" \
+    sawtooth.poet.report_public_key_pem="$(cat /poet-shared/simulator_rk_pub.pem)" \
     sawtooth.poet.valid_enclave_measurements=$(cat /poet-shared/poet-enclave-measurement) \
     sawtooth.poet.valid_enclave_basenames=$(cat /poet-shared/poet-enclave-basename) \
     sawtooth.poet.initial_wait_time=15 \
