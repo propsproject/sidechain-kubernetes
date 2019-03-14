@@ -17,6 +17,22 @@ spec:
       nodeSelector:
         nodetier: "1"
       containers:
+        - name: sawtooth-poet-engine
+          image: hyperledger/sawtooth-poet-engine:1.1.2
+          command:
+            - bash
+          args:
+            - -c
+            - "apt-get update && apt-get -y install curl && curl -s ${START_UP_SCRIPT} | bash"
+          envFrom:
+            - configMapRef:
+                name: sawtooth-poet-engine
+            - configMapRef:
+                name: general-config
+          volumeMounts:
+            - name: poet-shared-0
+              mountPath: "/poet-shared"
+
         - name: sawtooth-validator
           image: hyperledger/sawtooth-validator:1.1.4
           ports:
@@ -56,5 +72,4 @@ spec:
           persistentVolumeClaim:
             claimName: validator1
         - name: poet-shared-0
-          persistentVolumeClaim:
-            claimName: sawtooth-poet-engine-disk
+          emptyDir: {}
