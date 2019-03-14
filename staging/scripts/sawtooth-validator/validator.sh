@@ -67,6 +67,8 @@ if [ ! -e /opt/config.batch ]; then
     sawtooth.poet.key_block_claim_limit=100000 \
     sawtooth.poet.ztest_minimum_win_count=100000 \
     -o /opt/config.batch
+
+    sawadm genesis /opt/config-genesis.batch /opt/config.batch /opt/poet.batch
 fi
 
 if [ ! -e "$SAWTOOTH_HOME/etc/validator.toml" ]; then
@@ -82,11 +84,6 @@ fi
 if [ ! -e "$SAWTOOTH_HOME/logs/validator-debug.log" ]; then
     echo "Creating the validator-debug.log"
     touch $SAWTOOTH_HOME/logs/validator-debug.log
-fi
-
-if [ ! -f "$SAWTOOTH_HOME/data/genesis.batch" ]; then
-    echo "No genesis batch was found, going to create one"
-    sawadm genesis /opt/config-genesis.batch /opt/config.batch /opt/poet.batch
 fi
 
 if [ ! -e /root/.sawtooth/keys/my_key.priv ]; then
