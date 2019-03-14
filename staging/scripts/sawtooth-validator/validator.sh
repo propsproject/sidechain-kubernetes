@@ -94,10 +94,12 @@ if [ ! -e /root/.sawtooth/keys/my_key.priv ]; then
     if [ -e /opt/my_key.priv ]; then
         echo "Fetching the key from /opt"
         cp /opt/my_key.priv /root/.sawtooth/keys/my_key.priv
+        cp /opt/my_key.pub /root/.sawtooth/keys/my_key.pub
     else
         echo "Generating a new key"
         sawtooth keygen my_key
         cp /root/.sawtooth/keys/my_key.priv /opt/my_key.priv
+        cp /root/.sawtooth/keys/my_key.pub /opt/my_key.pub
     fi
 fi
 
