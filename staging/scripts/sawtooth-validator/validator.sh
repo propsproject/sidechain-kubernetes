@@ -6,6 +6,10 @@ fi
 
 if [ ! -d "$SAWTOOTH_HOME/keys" ]; then
     mkdir -p $SAWTOOTH_HOME/keys
+fi
+
+if [ ! -f "$SAWTOOTH_HOME/keys/validator.priv" ]; then
+    echo 'No validator private key found, generating one';
     sawadm keygen;
 fi
 
@@ -39,7 +43,10 @@ while [ ! -f /poet-shared/poet.batch ]; do
     sleep 1;
 done
 
-cp /poet-shared/poet.batch /opt/poet.batch
+if [ ! -f /opt/poet.batch ]; then
+    echo "copying /poet-shared/poet.batch to /opt/poet.batch"
+    cp /poet-shared/poet.batch /opt/poet.batch
+fi
 
 if [ ! -e /opt/config-genesis.batch ]; then
     echo "No config-genesis.batch file"
