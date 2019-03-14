@@ -64,7 +64,7 @@ spec:
               value: "/opt/sawtooth"
           volumeMounts:
             - name: sawtooth-validator
-              mountPath: "/"
+              mountPath: "/opt"
             - name: poet-shared-0
               mountPath: "/poet-shared"
       volumes:
