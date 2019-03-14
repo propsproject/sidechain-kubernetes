@@ -79,12 +79,12 @@ fi
 
 if [ ! -e "$SAWTOOTH_HOME/data/genesis.batch" ]; then
     echo "No genesis batch was found, going to create one"
-    sawadm genesis config-genesis.batch config.batch poet.batch;
+    sawadm genesis config-genesis.batch config.batch poet.batch
 fi
 
 if [ ! -e /root/.sawtooth/keys/my_key.priv ]; then
     echo "No sawtooth key was found, going to create one"
-    sawtooth keygen my_key; \
+    sawtooth keygen my_key \
 fi
 
 SH="$SAWTOOTH_HOME"
