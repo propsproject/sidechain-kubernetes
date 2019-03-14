@@ -53,8 +53,8 @@ if [ ! -e config.batch ]; then
     sawtooth.poet.report_public_key_pem="$(cat /poet-shared/simulator_rk_pub.pem)" \
     sawtooth.poet.valid_enclave_measurements=$(cat /poet-shared/poet-enclave-measurement) \
     sawtooth.poet.valid_enclave_basenames=$(cat /poet-shared/poet-enclave-basename) \
-    sawtooth.poet.initial_wait_time=15 \
-    sawtooth.poet.target_wait_time=15 \
+    sawtooth.poet.initial_wait_time=1 \
+    sawtooth.poet.target_wait_time=10 \
     sawtooth.publisher.max_batches_per_block=200 \
     sawtooth.poet.key_block_claim_limit=100000 \
     sawtooth.poet.ztest_minimum_win_count=100000 \
@@ -62,6 +62,7 @@ if [ ! -e config.batch ]; then
 fi
 
 if [ ! -e "$SAWTOOTH_HOME/etc/validator.toml" ]; then
+    echo "Creating a sawtooth validator.toml configuration file"
     touch $SAWTOOTH_HOME/etc/validator.toml
     echo "opentsdb_url = \"${OPENTSDB_URL}\"" >> $SAWTOOTH_HOME/etc/validator.toml
     echo "opentsdb_db = \"${OPENTSDB_DB}\"" >> $SAWTOOTH_HOME/etc/validator.toml
@@ -71,15 +72,18 @@ if [ ! -e "$SAWTOOTH_HOME/etc/validator.toml" ]; then
 fi
 
 if [ ! -e "$SAWTOOTH_HOME/logs/validator-debug.log" ]; then
+    echo "Creating the validator-debug.log"
     touch $SAWTOOTH_HOME/logs/validator-debug.log
 fi
 
-if [ ! -e "$SAWTOOTH_HOME/data/block-chain-id" ]; then
+if [ ! -e "$SAWTOOTH_HOME/data/genesis.batch" ]; then
+    echo "No genesis batch was found, going to create one"
     sawadm genesis config-genesis.batch config.batch poet.batch;
 fi
 
 if [ ! -e /root/.sawtooth/keys/my_key.priv ]; then
-   sawtooth keygen my_key; \
+    echo "No sawtooth key was found, going to create one"
+    sawtooth keygen my_key; \
 fi
 
 SH="$SAWTOOTH_HOME"
