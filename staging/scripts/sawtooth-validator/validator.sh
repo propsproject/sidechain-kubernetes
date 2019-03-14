@@ -39,11 +39,11 @@ while [ ! -f /poet-shared/poet.batch ]; do
     sleep 1;
 done
 
-cp /poet-shared/poet.batch /
+cp /poet-shared/poet.batch /opt/poet.batch
 
-if [ ! -e config-genesis.batch ]; then
+if [ ! -e /opt/config-genesis.batch ]; then
     echo "No config-genesis.batch file"
-    sawset genesis -k $SAWTOOTH_HOME/keys/validator.priv -o config-genesis.batch;
+    sawset genesis -k $SAWTOOTH_HOME/keys/validator.priv -o /opt/config-genesis.batch;
 fi
 
 if [ ! -e config.batch ]; then
@@ -59,7 +59,7 @@ if [ ! -e config.batch ]; then
     sawtooth.publisher.max_batches_per_block=200 \
     sawtooth.poet.key_block_claim_limit=100000 \
     sawtooth.poet.ztest_minimum_win_count=100000 \
-    -o config.batch
+    -o /opt/config.batch
 fi
 
 if [ ! -e "$SAWTOOTH_HOME/etc/validator.toml" ]; then
@@ -79,12 +79,19 @@ fi
 
 if [ ! -e "$SAWTOOTH_HOME/data/genesis.batch" ]; then
     echo "No genesis batch was found, going to create one"
-    sawadm genesis config-genesis.batch config.batch poet.batch
+    sawadm genesis /opt/config-genesis.batch /opt/config.batch /opt/poet.batch
 fi
 
 if [ ! -e /root/.sawtooth/keys/my_key.priv ]; then
-    echo "No sawtooth key was found, going to create one"
-    sawtooth keygen my_key \
+    echo "No sawtooth key was found"
+    if [ -e /opt/my_key.priv ]; then
+        echo "Fetching the key from /opt"
+        cp /opt/my_key.priv /root/.sawtooth/keys/my_key.priv
+    else
+        echo "Generating a new key"
+        sawtooth keygen my_key
+        cp /root/.sawtooth/keys/my_key.priv /opt/my_key.priv
+    fi
 fi
 
 SH="$SAWTOOTH_HOME"
