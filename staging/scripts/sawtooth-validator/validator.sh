@@ -42,6 +42,7 @@ done
 cp /poet-shared/poet.batch /
 
 if [ ! -e config-genesis.batch ]; then
+    echo "No config-genesis.batch file"
     sawset genesis -k $SAWTOOTH_HOME/keys/validator.priv -o config-genesis.batch;
 fi
 
@@ -58,7 +59,7 @@ if [ ! -e config.batch ]; then
     sawtooth.publisher.max_batches_per_block=200 \
     sawtooth.poet.key_block_claim_limit=100000 \
     sawtooth.poet.ztest_minimum_win_count=100000 \
-    -o config.batch;
+    -o config.batch
 fi
 
 if [ ! -e "$SAWTOOTH_HOME/etc/validator.toml" ]; then
