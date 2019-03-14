@@ -84,7 +84,7 @@ if [ ! -e "$SAWTOOTH_HOME/logs/validator-debug.log" ]; then
     touch $SAWTOOTH_HOME/logs/validator-debug.log
 fi
 
-if [ ! -e "$SAWTOOTH_HOME/data/genesis.batch" ]; then
+if [ ! -f "$SAWTOOTH_HOME/data/genesis.batch" ]; then
     echo "No genesis batch was found, going to create one"
     sawadm genesis /opt/config-genesis.batch /opt/config.batch /opt/poet.batch
 fi
@@ -93,6 +93,7 @@ if [ ! -e /root/.sawtooth/keys/my_key.priv ]; then
     echo "No sawtooth key was found"
     if [ -e /opt/my_key.priv ]; then
         echo "Fetching the key from /opt"
+        mkdir -p /root/.sawtooth/keys
         cp /opt/my_key.priv /root/.sawtooth/keys/my_key.priv
         cp /opt/my_key.pub /root/.sawtooth/keys/my_key.pub
     else
