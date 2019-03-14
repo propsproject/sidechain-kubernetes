@@ -53,7 +53,7 @@ if [ ! -e /opt/config-genesis.batch ]; then
     sawset genesis -k $SAWTOOTH_HOME/keys/validator.priv -o /opt/config-genesis.batch;
 fi
 
-if [ ! -e config.batch ]; then
+if [ ! -e /opt/config.batch ]; then
     sawset proposal create \
     -k $SAWTOOTH_HOME/keys/validator.priv \
     sawtooth.consensus.algorithm.name=PoET \
