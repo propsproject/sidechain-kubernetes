@@ -5,7 +5,7 @@ if [ ! -f /poet-shared/poet-enclave-measurement ]; then
 fi
 
 if [ ! -f /poet-shared/poet-enclave-basename ]; then
-  poet enclave basename >> /poet-shared/poet-enclave-basename;
+  poet enclave basename --enclave-module simulator >> /poet-shared/poet-enclave-basename;
 fi
 
 if [ ! -f /poet-shared/simulator_rk_pub.pem ]; then
@@ -18,6 +18,6 @@ while [ ! -f /poet-shared/validator-0/keys/validator.priv ]; do
 done
 
 cp -a /poet-shared/validator-0/keys /etc/sawtooth
-poet registration create -k /etc/sawtooth/keys/validator.priv -o /poet-shared/poet.batch
+poet registration create --enclave-module simulator -k /etc/sawtooth/keys/validator.priv -o /poet-shared/poet.batch
 
 poet-engine -v -C tcp://$HOSTNAME:5050 --component tcp://$HOSTNAME:4004
