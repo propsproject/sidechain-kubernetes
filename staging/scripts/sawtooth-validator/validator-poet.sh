@@ -141,7 +141,7 @@ handlers = [ "debug"]
 EOF
 
 sawtooth-validator  \
-    --endpoint tcp://eth0:8800 \
+    --endpoint tcp://$SAWTOOTH_VALIDATOR_SERVICE_HOST:8800 \
     --bind component:tcp://eth0:4004 \
     --bind consensus:tcp://eth0:5050 \
     --bind network:tcp://eth0:8800 \
