@@ -64,8 +64,11 @@ if [ ! -e /opt/config.batch ]; then
     sawtooth.poet.initial_wait_time=1 \
     sawtooth.poet.target_wait_time=10 \
     sawtooth.publisher.max_batches_per_block=200 \
-    sawtooth.poet.key_block_claim_limit=100000 \
-    sawtooth.poet.ztest_minimum_win_count=100000 \
+    sawtooth.poet.block_claim_delay=1 \
+    sawtooth.poet.key_block_claim_limit= 100000 \
+    sawtooth.poet.ztest_minimum_win_count=999999999 \
+    #sawtooth.poet.key_block_claim_limit=100000 \
+    #sawtooth.poet.ztest_minimum_win_count=100000 \
     -o /opt/config.batch
 
     sawadm genesis /opt/config-genesis.batch /opt/config.batch /opt/poet.batch
