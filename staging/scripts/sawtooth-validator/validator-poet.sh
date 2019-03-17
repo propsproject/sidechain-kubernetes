@@ -65,7 +65,7 @@ if [ ! -e /opt/config.batch ]; then
     sawtooth.poet.target_wait_time=10 \
     sawtooth.publisher.max_batches_per_block=200 \
     sawtooth.poet.block_claim_delay=1 \
-    sawtooth.poet.key_block_claim_limit= 100000 \
+    sawtooth.poet.key_block_claim_limit=100000 \
     sawtooth.poet.ztest_minimum_win_count=999999999 \
     -o /opt/config.batch
 
