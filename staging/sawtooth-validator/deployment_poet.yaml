@@ -48,7 +48,7 @@ spec:
             - bash
           args:
             - -c
-            - "apt-get update && apt-get -y install curl && curl -s ${START_UP_SCRIPT} | bash"
+            - "apt-get update && apt-get -y install curl && curl -s ${START_UP_SCRIPT_POET} | bash"
           envFrom:
             - configMapRef:
                 name: sawtooth-validator
