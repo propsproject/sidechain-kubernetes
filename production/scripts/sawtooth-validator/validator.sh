@@ -91,5 +91,6 @@ sawtooth-validator  \
     --endpoint tcp://$PROPSCHAIN_VALIDATOR_SERVICE_HOST:8800 \
     --bind component:tcp://eth0:4004 \
     --bind network:tcp://eth0:8800 \
+    --bind consensus:tcp://eth0:5050 \
     --opentsdb-url http://sawtooth-metrics:8086 \
     --opentsdb-db metrics

@@ -18,7 +18,7 @@ spec:
         nodetier: "1"
       containers:
         - name: sawtooth-validator
-          image: hyperledger/sawtooth-validator:1.0
+          image: hyperledger/sawtooth-validator:1.0.5
           ports:
             - name: tp
               containerPort: 4004
