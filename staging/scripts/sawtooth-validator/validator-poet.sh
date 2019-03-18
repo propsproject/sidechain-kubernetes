@@ -88,7 +88,7 @@ if [ ! -e "$SAWTOOTH_HOME/logs/validator-debug.log" ]; then
 fi
 
 mkdir /opt/dump || true
-chmod a+rwx /opt/dump
+chmod a+rwx /opt/dump || true
 echo "/opt/dump/core.%e.%p.%h.%t" > /proc/sys/kernel/core_pattern
 
 if [ ! -e /root/.sawtooth/keys/my_key.priv ]; then
