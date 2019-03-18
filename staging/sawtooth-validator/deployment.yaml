@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sawtooth-validator
@@ -18,7 +18,7 @@ spec:
         nodetier: "1"
       containers:
         - name: sawtooth-validator
-          image: hyperledger/sawtooth-validator:1.1.4
+          image: hyperledger/sawtooth-validator:1.0.5
           ports:
             - name: tp
               containerPort: 4004
@@ -32,7 +32,7 @@ spec:
             - bash
           args:
             - -c
-            - "apt-get update && apt-get -y install curl && curl -s ${START_UP_SCRIPT_DEVMODE} | bash"
+            - "apt-get update && apt-get -y install curl && curl -s ${START_UP_SCRIPT} | bash"
           envFrom:
             - configMapRef:
                 name: sawtooth-validator
