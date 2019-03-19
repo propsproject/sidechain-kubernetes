@@ -92,5 +92,6 @@ sawtooth-validator  \
     --bind component:tcp://eth0:4004 \
     --bind network:tcp://eth0:8800 \
     --bind consensus:tcp://eth0:8800 \
+    --peering static \
     --opentsdb-url http://sawtooth-metrics:8086 \
     --opentsdb-db metrics
