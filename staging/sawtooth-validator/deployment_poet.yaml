@@ -39,6 +39,7 @@ spec:
             capabilities:
               add:
                 - SYS_PTRACE
+            privileged: true
           ports:
             - name: tp
               containerPort: 4004
