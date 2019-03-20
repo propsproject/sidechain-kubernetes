@@ -46,3 +46,10 @@ spec:
                     name: global-secrets
             - name: SAWTOOTH_HOME
               value: "/opt/sawtooth"
+          volumeMounts:
+            - name: sawtooth-validator
+              mountPath: "/opt/sawtooth"
+      volumes:
+        - name: sawtooth-validator
+          persistentVolumeClaim:
+            claimName: validator1
