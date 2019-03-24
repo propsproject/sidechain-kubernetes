@@ -21,4 +21,4 @@ spec:
             - bash
           args:
             - -c
-            - "sawtooth-identity-tp -vv -C tcp://sawtooth-validator:4004"
+            - "identity-tp -vv -C tcp://sawtooth-validator:4004"
