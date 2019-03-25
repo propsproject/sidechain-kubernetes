@@ -46,6 +46,21 @@ if [ ! -e "$SAWTOOTH_HOME/data/block-chain-id" ]; then
     sawadm genesis
 fi
 
+if [ ! -e /root/.sawtooth/keys/my_key.priv ]; then
+    echo "No sawtooth key was found"
+    if [ -e /opt/my_key.priv ]; then
+        echo "Fetching the key from /opt"
+        mkdir -p /root/.sawtooth/keys
+        cp /opt/root.priv /root/.sawtooth/keys/root.priv
+        cp /opt/root.pub /root/.sawtooth/keys/root.pub
+    else
+        echo "Generating a new key"
+        sawtooth keygen root
+        cp /root/.sawtooth/keys/root.priv /opt/root.priv
+        cp /root/.sawtooth/keys/root.pub /opt/root.pub
+    fi
+fi
+
 poet enclave basename --enclave-module simulator
 poet registration create --enclave-module simulator
 
