@@ -48,7 +48,7 @@ fi
 
 if [ ! -e /root/.sawtooth/keys/my_key.priv ]; then
     echo "No sawtooth key was found"
-    if [ -e /opt/my_key.priv ]; then
+    if [ -e /opt/root.priv ]; then
         echo "Fetching the key from /opt"
         mkdir -p /root/.sawtooth/keys
         cp /opt/root.priv /root/.sawtooth/keys/root.priv
