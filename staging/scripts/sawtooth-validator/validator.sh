@@ -49,8 +49,8 @@ if [ ! -e "$SAWTOOTH_HOME/data/block-chain-id" ]; then
     poet registration create --enclave-module simulator
 fi
 
-if [ ! -e /root/.sawtooth/keys/my_key.priv ]; then
-    echo "No sawtooth key was found"
+if [ ! -e /root/.sawtooth/keys/root.priv ]; then
+    echo "No private key was found"
     if [ -e /opt/root.priv ]; then
         echo "Fetching the key from /opt"
         mkdir -p /root/.sawtooth/keys
