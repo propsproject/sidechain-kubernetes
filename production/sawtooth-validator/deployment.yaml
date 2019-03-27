@@ -48,7 +48,7 @@ spec:
               value: "/opt/sawtooth"
           volumeMounts:
             - name: sawtooth-validator
-              mountPath: "/opt/sawtooth"
+              mountPath: "/opt"
       volumes:
         - name: sawtooth-validator
           persistentVolumeClaim:
