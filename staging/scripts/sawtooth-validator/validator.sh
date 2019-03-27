@@ -44,6 +44,9 @@ fi
 
 if [ ! -e "$SAWTOOTH_HOME/data/block-chain-id" ]; then
     sawadm genesis
+
+    poet enclave basename --enclave-module simulator
+    poet registration create --enclave-module simulator
 fi
 
 if [ ! -e /root/.sawtooth/keys/my_key.priv ]; then
@@ -61,9 +64,6 @@ if [ ! -e /root/.sawtooth/keys/my_key.priv ]; then
         sawset proposal create --key /opt/sawtooth/keys/validator.priv sawtooth.identity.allowed_keys=$(cat ~/.sawtooth/keys/root.pub) --url http://sawtooth-restapi:8008
     fi
 fi
-
-poet enclave basename --enclave-module simulator
-poet registration create --enclave-module simulator
 
 SH="$SAWTOOTH_HOME"
 env="$ENVIRONMENT"
