@@ -61,7 +61,7 @@ if [ ! -e /root/.sawtooth/keys/root.priv ]; then
         sawtooth keygen root
         cp /root/.sawtooth/keys/root.priv /opt/root.priv
         cp /root/.sawtooth/keys/root.pub /opt/root.pub
-        sawset proposal create --key /opt/sawtooth/keys/validator.priv sawtooth.identity.allowed_keys=$(cat ~/.sawtooth/keys/root.pub) --url http://sawtooth-restapi:8008
+        #sawset proposal create --key /opt/sawtooth/keys/validator.priv sawtooth.identity.allowed_keys=$(cat ~/.sawtooth/keys/root.pub) --url http://sawtooth-restapi:8008
     fi
 fi
 
