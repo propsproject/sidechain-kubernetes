@@ -69,7 +69,7 @@ if [ ! -e /opt/config.batch ]; then
     sawtooth.poet.ztest_minimum_win_count=999999999 \
     -o /opt/config.batch
 
-    sawadm genesis /opt/config-genesis.batch /opt/config.batch /opt/poet.batch
+    #sawadm genesis /opt/config-genesis.batch /opt/config.batch /opt/poet.batch
 fi
 
 if [ ! -e "$SAWTOOTH_HOME/etc/validator.toml" ]; then
