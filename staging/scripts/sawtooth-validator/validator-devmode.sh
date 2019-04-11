@@ -31,6 +31,7 @@ if [ ! -e /opt/config-genesis.batch ]; then
 fi
 
 if [ ! -e /opt/config.batch ]; then
+    echo "Going to create a proposal with initial settings"
     sawset proposal create \
     -k $SAWTOOTH_HOME/keys/validator.priv \
     sawtooth.consensus.algorithm.name=Devmode \
