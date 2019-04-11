@@ -91,18 +91,18 @@ mkdir /opt/dump || true
 chmod a+rwx /opt/dump || true
 echo "/opt/dump/core.%e.%p.%h.%t" > /proc/sys/kernel/core_pattern
 
-if [ ! -e /root/.sawtooth/keys/my_key.priv ]; then
+if [ ! -e /root/.sawtooth/keys/root.priv ]; then
     echo "No sawtooth key was found"
-    if [ -e /opt/my_key.priv ]; then
+    if [ -e /opt/root.priv ]; then
         echo "Fetching the key from /opt"
         mkdir -p /root/.sawtooth/keys
-        cp /opt/my_key.priv /root/.sawtooth/keys/my_key.priv
-        cp /opt/my_key.pub /root/.sawtooth/keys/my_key.pub
+        cp /opt/root.priv /root/.sawtooth/keys/root.priv
+        cp /opt/root.pub /root/.sawtooth/keys/root.pub
     else
         echo "Generating a new key"
-        sawtooth keygen my_key
-        cp /root/.sawtooth/keys/my_key.priv /opt/my_key.priv
-        cp /root/.sawtooth/keys/my_key.pub /opt/my_key.pub
+        sawtooth keygen root
+        cp /root/.sawtooth/keys/root.priv /opt/root.priv
+        cp /root/.sawtooth/keys/root.pub /opt/root.pub
     fi
 fi
 
@@ -145,9 +145,9 @@ handlers = [ "debug"]
 EOF
 
 sawtooth-validator  \
-    --endpoint tcp://$SAWTOOTH_VALIDATOR_SERVICE_HOST:8800 \
+    --endpoint tcp://validator.staging.sidechain.propsproject.io:8800 \
     --bind component:tcp://eth0:4004 \
-    --bind consensus:tcp://eth0:5050 \
     --bind network:tcp://eth0:8800 \
+    --bind consensus:tcp://eth0:5050 \
     --opentsdb-url http://sawtooth-metrics:8086 \
     --opentsdb-db metrics
