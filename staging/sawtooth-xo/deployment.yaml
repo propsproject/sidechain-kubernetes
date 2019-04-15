@@ -1,0 +1,34 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: sawtooth-xo
+  labels:
+    app: sawtooth-xo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sawtooth-xo
+  template:
+    metadata:
+      labels:
+        app: sawtooth-xo
+    spec:
+      containers:
+        - name: sawtooth-rest-api
+          image: hyperledger/sawtooth-xo-tp-python:1.1.4
+          ports:
+            - name: api
+              containerPort: 8008
+          envFrom:
+            - configMapRef:
+                name: general-config
+          env:
+            - name: OPENTSDB_PW
+              valueFrom:
+                secretKeyRef:
+                  key: OPENTSDB_PW
+                  name: global-secrets
+          command:
+            - "/bin/bash"
+            - xo-tp-python -vv -C tcp://sawtooth-validator:4004
