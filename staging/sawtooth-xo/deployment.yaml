@@ -30,5 +30,7 @@ spec:
                   key: OPENTSDB_PW
                   name: global-secrets
           command:
-            - "/bin/bash"
-            - xo-tp-python -vv -C tcp://sawtooth-validator:4004
+            - bash
+          args:
+            - -c
+            - "xo-tp-python -vv -C tcp://sawtooth-validator:4004"
