@@ -33,4 +33,4 @@ spec:
             - bash
           args:
             - -c
-            - "xo-tp-python -vv -C tcp://sawtooth-validator:4004"
+            - "xo-tp-go -vv -C tcp://sawtooth-validator:4004"
