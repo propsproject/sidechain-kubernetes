@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: sawtooth-settings-tp
-          image: hyperledger/sawtooth-settings-tp:1.1.4
+          image: hyperledger/sawtooth-settings-tp:1.1.5
           command:
             - bash
           args:

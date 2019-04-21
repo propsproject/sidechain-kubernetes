@@ -34,7 +34,7 @@ spec:
               mountPath: "/poet-shared"
 
         - name: sawtooth-validator
-          image: hyperledger/sawtooth-validator:1.1.4
+          image: hyperledger/sawtooth-validator:1.1.5
           securityContext:
             capabilities:
               add:

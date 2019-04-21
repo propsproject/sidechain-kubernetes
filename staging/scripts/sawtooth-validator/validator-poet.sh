@@ -81,7 +81,6 @@ if [ ! -e "$SAWTOOTH_HOME/etc/validator.toml" ]; then
     echo "opentsdb_db = \"${OPENTSDB_DB}\"" >> $SAWTOOTH_HOME/etc/validator.toml
     echo "opentsdb_username = \"${OPENTSDB_USERNAME}\"" >> $SAWTOOTH_HOME/etc/validator.toml
     echo "opentsdb_password = \"${OPENTSDB_PW}\"" >> $SAWTOOTH_HOME/etc/validator.toml
-    cat $SAWTOOTH_HOME/etc/validator.toml
 fi
 
 if [ ! -e "$SAWTOOTH_HOME/logs/validator-debug.log" ]; then
