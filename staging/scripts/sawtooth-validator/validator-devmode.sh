@@ -41,6 +41,8 @@ if [ ! -e /opt/config.batch ]; then
     sawadm genesis /opt/config-genesis.batch /opt/config.batch
 fi
 
+printenv
+rm $SAWTOOTH_HOME/etc/validator.toml
 if [ ! -e "$SAWTOOTH_HOME/etc/validator.toml" ]; then
     echo "Creating a sawtooth validator.toml configuration file"
     touch $SAWTOOTH_HOME/etc/validator.toml
