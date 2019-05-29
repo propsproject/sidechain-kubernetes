@@ -29,8 +29,6 @@ spec:
                 name: sawtooth-validator
             - configMapRef:
                 name: general-config
-            - secretRef:
-                name: validator-secrets
           volumeMounts:
             - name: poet-shared-0
               mountPath: "/poet-shared"
@@ -61,6 +59,8 @@ spec:
                 name: sawtooth-validator
             - configMapRef:
                 name: general-config
+            - secretRef:
+                name: validator-secrets
           env:
             - name: OPENTSDB_PW
               valueFrom:
