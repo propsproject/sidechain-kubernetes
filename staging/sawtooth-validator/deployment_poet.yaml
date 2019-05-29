@@ -17,8 +17,29 @@ spec:
       nodeSelector:
         nodetier: "1"
       containers:
+        - name: sawtooth-poet-engine
+          image: hyperledger/sawtooth-poet-engine:1.1.2
+          command:
+            - bash
+          args:
+            - -c
+            - "apt-get update && apt-get -y install curl && curl -s ${START_UP_SCRIPT_POET_ENGINE} | bash"
+          envFrom:
+            - configMapRef:
+                name: sawtooth-validator
+            - configMapRef:
+                name: general-config
+          volumeMounts:
+            - name: poet-shared-0
+              mountPath: "/poet-shared"
+
         - name: sawtooth-validator
           image: hyperledger/sawtooth-validator:1.1.5
+          securityContext:
+            capabilities:
+              add:
+                - SYS_PTRACE
+            privileged: true
           ports:
             - name: tp
               containerPort: 4004
@@ -32,7 +53,7 @@ spec:
             - bash
           args:
             - -c
-            - "apt-get update && apt-get -y install curl && curl -s ${START_UP_SCRIPT_DEVMODE} | bash"
+            - "apt-get update && apt-get -y install curl && curl -s ${START_UP_SCRIPT_POET} | bash"
           envFrom:
             - configMapRef:
                 name: sawtooth-validator
@@ -40,9 +61,6 @@ spec:
                 name: general-config
             - secretRef:
                 name: validator-secrets
-          volumeMounts:
-            - name: sawtooth-validator
-              mountPath: "/opt"
           env:
             - name: OPENTSDB_PW
               valueFrom:
@@ -51,7 +69,14 @@ spec:
                     name: global-secrets
             - name: SAWTOOTH_HOME
               value: "/opt/sawtooth"
+          volumeMounts:
+            - name: sawtooth-validator
+              mountPath: "/opt"
+            - name: poet-shared-0
+              mountPath: "/poet-shared"
       volumes:
         - name: sawtooth-validator
           persistentVolumeClaim:
             claimName: validator1
+        - name: poet-shared-0
+          emptyDir: {}

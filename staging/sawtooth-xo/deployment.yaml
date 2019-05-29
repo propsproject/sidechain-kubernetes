@@ -1,22 +1,22 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: sawtooth-restapi
+  name: sawtooth-xo
   labels:
-    app: sawtooth-restapi
+    app: sawtooth-xo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sawtooth-restapi
+      app: sawtooth-xo
   template:
     metadata:
       labels:
-        app: sawtooth-restapi
+        app: sawtooth-xo
     spec:
       containers:
         - name: sawtooth-rest-api
-          image: hyperledger/sawtooth-rest-api:1.1.5
+          image: hyperledger/sawtooth-xo-tp-go:1.1.4
           ports:
             - name: api
               containerPort: 8008
@@ -30,9 +30,7 @@ spec:
                   key: OPENTSDB_PW
                   name: global-secrets
           command:
-            - "/bin/bash"
-            - "-ec"
-            - |
-              echo "opentsdb_username = \"${OPENTSDB_USERNAME}\"" >> /etc/sawtooth/rest_api.toml
-              echo "opentsdb_password = \"${OPENTSDB_PW}\"" >> /etc/sawtooth/rest_api.toml
-              sawtooth-rest-api -C tcp://sawtooth-validator:4004 --opentsdb-url ${OPENTSDB_URL} --opentsdb-db ${OPENTSDB_DB} --bind 0.0.0.0:8008
+            - bash
+          args:
+            - -c
+            - "xo-tp-go -vv -C tcp://sawtooth-validator:4004"
