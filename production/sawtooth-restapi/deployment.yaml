@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: sawtooth-rest-api
-          image: hyperledger/sawtooth-rest-api:1.0
+          image: hyperledger/sawtooth-rest-api:1.1.5
           ports:
             - name: api
               containerPort: 8008
