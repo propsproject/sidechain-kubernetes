@@ -44,10 +44,26 @@ fi
 
 if [ ! -e "$SAWTOOTH_HOME/data/block-chain-id" ]; then
     sawadm genesis
+
+    poet enclave basename --enclave-module simulator
+    poet registration create --enclave-module simulator
 fi
 
-poet enclave basename --enclave-module simulator
-poet registration create --enclave-module simulator
+if [ ! -e /root/.sawtooth/keys/root.priv ]; then
+    echo "No private key was found"
+    if [ -e /opt/root.priv ]; then
+        echo "Fetching the key from /opt"
+        mkdir -p /root/.sawtooth/keys
+        cp /opt/root.priv /root/.sawtooth/keys/root.priv
+        cp /opt/root.pub /root/.sawtooth/keys/root.pub
+    else
+        echo "Generating a new key and adding the key to identity allowed keys"
+        sawtooth keygen root
+        cp /root/.sawtooth/keys/root.priv /opt/root.priv
+        cp /root/.sawtooth/keys/root.pub /opt/root.pub
+        #sawset proposal create --key /opt/sawtooth/keys/validator.priv sawtooth.identity.allowed_keys=$(cat ~/.sawtooth/keys/root.pub) --url http://sawtooth-restapi:8008
+    fi
+fi
 
 SH="$SAWTOOTH_HOME"
 env="$ENVIRONMENT"
