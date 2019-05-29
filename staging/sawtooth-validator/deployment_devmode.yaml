@@ -38,6 +38,8 @@ spec:
                 name: sawtooth-validator
             - configMapRef:
                 name: general-config
+            - secretRef:
+                name: validator-secrets
           volumeMounts:
             - name: sawtooth-validator
               mountPath: "/opt"
