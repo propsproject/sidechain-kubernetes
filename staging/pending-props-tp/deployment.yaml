@@ -14,6 +14,8 @@ spec:
       labels:
         app: pending-props-tp
     spec:
+      nodeSelector:
+        nodetier: "1"
       containers:
         - name: pending-props-tp
           image: 774122189772.dkr.ecr.us-east-1.amazonaws.com/pending-props-tp-staging-sidechain
