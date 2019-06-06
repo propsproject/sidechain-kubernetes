@@ -11,14 +11,22 @@ spec:
         spec:
           restartPolicy: OnFailure
           containers:
-            - name: eth-sync
-              image: byrnedo/alpine-curl:0.1.3
-              command:
-                - "/bin/sh"
-                - "-ec"
-                - |
-                  echo "Automated earnings test"
-                  curl -v "http://props-eth-sync-api:3000/eth-sync/sync"
-                  echo
-                  echo "Call Complete"
-                  echo
+            - name: props-eth-sync-api
+              image: 774122189772.dkr.ecr.us-east-1.amazonaws.com/props-eth-sync-staging-sidechain
+              imagePullPolicy: IfNotExists
+              env:
+                - name: SERVICE_NAME
+                  value: "api"
+                - name: DOGSTATSD_HOST_IP
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: status.hostIP
+              envFrom:
+                - secretRef:
+                    name: props-eth-sync-secrets
+                - secretRef:
+                    name: global-secrets
+                - configMapRef:
+                    name: props-eth-sync
+                - configMapRef:
+                    name: general-config
