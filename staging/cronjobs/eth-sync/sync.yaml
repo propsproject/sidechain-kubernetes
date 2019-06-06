@@ -13,7 +13,7 @@ spec:
           containers:
             - name: props-eth-sync-api
               image: 774122189772.dkr.ecr.us-east-1.amazonaws.com/props-eth-sync-staging-sidechain
-              imagePullPolicy: IfNotExists
+              imagePullPolicy: IfNotPresent
               env:
                 - name: SERVICE_NAME
                   value: "api"
