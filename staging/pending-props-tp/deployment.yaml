@@ -32,4 +32,4 @@ spec:
             - sh
           args:
             - -c
-            - "./build/bin/pending-props-tp -c -f ./configs/default.json"
+            - "/go/bin/pending-props-tp -c -f /go/bin/configs/default.json"
