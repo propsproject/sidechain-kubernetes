@@ -21,6 +21,9 @@ spec:
                   valueFrom:
                     fieldRef:
                       fieldPath: status.hostIP
+              command:
+                - bash -c
+                -
               envFrom:
                 - secretRef:
                     name: props-eth-sync-secrets
