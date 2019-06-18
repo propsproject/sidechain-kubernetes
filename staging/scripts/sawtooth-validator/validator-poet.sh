@@ -151,7 +151,7 @@ handlers = [ "debug"]
 EOF
 
 sawtooth-validator  \
-    --endpoint $SAWTOOTH_VALIDATOR_PORT_8800_TCP \
+    --endpoint tcp://validator.staging.sidechain.propsproject.io:8800 \
     --bind component:tcp://eth0:4004 \
     --bind network:tcp://eth0:8800 \
     --bind consensus:tcp://eth0:5050 \
