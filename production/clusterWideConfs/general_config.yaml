@@ -17,3 +17,4 @@ data:
   "OPENTSDB_USERNAME": "lrdata"
   "OPENTSDB_DB": "metrics"
   "OPENTSDB_URL": "http://sawtooth-metrics:8086"
+  "SETTLEMENT_FROM_ADDRESSES": "{\"\":\"0x027cb938611e48772af147d3cc89542d6c197fe9\"}"
