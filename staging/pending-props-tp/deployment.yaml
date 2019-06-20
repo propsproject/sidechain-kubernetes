@@ -22,8 +22,6 @@ spec:
             - secretRef:
                 name: global-secrets
             - configMapRef:
-                name: pending-props-tp
-            - configMapRef:
                 name: general-config
           env:
           - name: NAME

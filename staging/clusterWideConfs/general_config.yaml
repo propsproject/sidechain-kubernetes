@@ -17,3 +17,4 @@ data:
   "OPENTSDB_USERNAME": "lrdata"
   "OPENTSDB_DB": "metrics"
   "OPENTSDB_URL": "http://sawtooth-metrics:8086"
+  "SECONDS_IN_DAY": "3600"
