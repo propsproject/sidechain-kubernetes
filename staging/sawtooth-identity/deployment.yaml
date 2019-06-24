@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sawtooth-identity
+  labels:
+    app: sawtooth-identity
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sawtooth-identity
+  template:
+    metadata:
+      labels:
+        app: sawtooth-identity
+    spec:
+      containers:
+        - name: sawtooth-identity-tp
+          image: hyperledger/sawtooth-identity-tp:1.1.5
+          command:
+            - bash
+          args:
+            - -c
+            - "identity-tp -vv -C tcp://sawtooth-validator:4004"
