@@ -16,6 +16,7 @@ data:
   "ETHERSCAN_URL": "https://api.etherscan.io/api"
   "ETHEREUM_CONFIRMATION_BLOCKS": "15"
   "PROPS_TOKEN_DEPLOYED_BLOCK": "7299684"
+  "SECONDS_IN_DAY": "86400"
   "OPENTSDB_USERNAME": "lrdata"
   "OPENTSDB_DB": "metrics"
   "OPENTSDB_URL": "http://sawtooth-metrics:8086"
