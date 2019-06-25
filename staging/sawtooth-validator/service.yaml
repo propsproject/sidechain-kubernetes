@@ -2,11 +2,9 @@ kind: Service
 apiVersion: v1
 metadata:
   name: sawtooth-validator
-  annotations:
-    dns.alpha.kubernetes.io/external: "validator.staging.sidechain.propsproject.io"
-    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "90"
 spec:
-  type: LoadBalancer
+  type: ExternalName
+  externalName: validator.staging.sidechain.propsproject.io
   selector:
     app: sawtooth-validator
   ports:
@@ -22,9 +20,3 @@ spec:
       protocol: TCP
       port: 5050
       targetPort: 5050
-  loadBalancerSourceRanges:
-    - "34.198.32.89/32"
-    - "10.0.0.0/16"
-    - "3.87.177.84/32"
-    - "52.202.115.169/32"
-    - "18.210.158.1/32"
