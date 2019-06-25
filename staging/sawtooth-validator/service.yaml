@@ -2,6 +2,8 @@ kind: Service
 apiVersion: v1
 metadata:
   name: sawtooth-validator
+  annotations:
+    dns.alpha.kubernetes.io/external: "validator.staging.sidechain.propsproject.io"
 spec:
   type: ExternalName
   externalName: validator.staging.sidechain.propsproject.io
