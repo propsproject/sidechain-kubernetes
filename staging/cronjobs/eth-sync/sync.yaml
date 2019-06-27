@@ -1,7 +1,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: eth-sync
+  name: sync-transfers
 spec:
   schedule: "* * * * *"
   concurrencyPolicy: Forbid
@@ -11,7 +11,7 @@ spec:
         spec:
           restartPolicy: OnFailure
           containers:
-          - name: props-eth-sync-api
+          - name: sync-transfers
             image: 774122189772.dkr.ecr.us-east-1.amazonaws.com/props-eth-sync-staging-sidechain:29
             command:
               - bash

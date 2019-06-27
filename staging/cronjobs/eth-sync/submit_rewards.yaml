@@ -1,7 +1,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: eth-sync
+  name: submit-rewards
 spec:
   schedule: "5 * * * *"
   concurrencyPolicy: Forbid
