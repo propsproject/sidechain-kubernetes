@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: submit-rewards
 spec:
-  schedule: "5 * * * *"
+  schedule: "15 * * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
