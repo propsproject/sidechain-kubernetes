@@ -18,7 +18,7 @@ spec:
             args:
               - -c
               - "npm run sync-latest"
-            imagePullPolicy: IfNotExists
+            imagePullPolicy: IfNotPresent
             env:
               - name: SERVICE_NAME
                 value: "api"
