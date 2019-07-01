@@ -61,8 +61,8 @@ if [ ! -e /opt/config.batch ]; then
     sawtooth.poet.report_public_key_pem="$(cat /poet-shared/simulator_rk_pub.pem)" \
     sawtooth.poet.valid_enclave_measurements=$(cat /poet-shared/poet-enclave-measurement) \
     sawtooth.poet.valid_enclave_basenames=$(cat /poet-shared/poet-enclave-basename) \
-    sawtooth.poet.initial_wait_time=1 \
-    sawtooth.poet.target_wait_time=10 \
+    sawtooth.poet.initial_wait_time=100 \
+    sawtooth.poet.target_wait_time=180 \
     sawtooth.publisher.max_batches_per_block=200 \
     sawtooth.poet.block_claim_delay=1 \
     sawtooth.poet.key_block_claim_limit=100000 \
@@ -74,7 +74,6 @@ else
     rm $SAWTOOTH_HOME/data/genesis.batch
 fi
 
-printenv
 rm $SAWTOOTH_HOME/etc/validator.toml
 if [ ! -e "$SAWTOOTH_HOME/etc/validator.toml" ]; then
     echo "Creating a sawtooth validator.toml configuration file"
@@ -154,7 +153,7 @@ sawtooth-validator  \
     --endpoint tcp://validator.staging.sidechain.propsproject.io:8800 \
     --bind component:tcp://eth0:4004 \
     --bind network:tcp://eth0:8800 \
-    --bind consensus:tcp://eth0:5050 \
     --scheduler parallel \
+    --bind consensus:tcp://eth0:5050 \
     --opentsdb-url http://sawtooth-metrics:8086 \
     --opentsdb-db metrics
