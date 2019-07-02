@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: eth-sync
 spec:
-  schedule: "* * * * *"
+  schedule: "5 * * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -17,7 +17,7 @@ spec:
               - bash
             args:
               - -c
-              - "npm run sync-latest"
+              - "npm run submit-rewards"
             imagePullPolicy: IfNotExists
             env:
               - name: SERVICE_NAME
