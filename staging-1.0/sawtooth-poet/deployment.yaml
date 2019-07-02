@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: sawtooth-poet-validator-registry-tp
-          image: hyperledger/sawtooth-poet-validator-registry-tp:1.0.5
+          image: hyperledger/sawtooth-poet-validator-registry-tp:1.0
           command:
             - bash
           args:
