@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+data:
+  START_UP_SCRIPT_POET_ENGINE: "https://raw.githubusercontent.com/propsproject/sidechain-kubernetes/master/staging-1.0/scripts/sawtooth-poet-engine/poet-engine.sh"
+  START_UP_SCRIPT_POET: "https://raw.githubusercontent.com/propsproject/sidechain-kubernetes/master/staging-1.0/scripts/sawtooth-validator/validator-poet.sh"
+  START_UP_SCRIPT_DEVMODE: "https://raw.githubusercontent.com/propsproject/sidechain-kubernetes/master/staging-1.0/scripts/sawtooth-validator/validator-devmode.sh"
+  RUST_BACKTRACE: "1"
+kind: ConfigMap
+metadata:
+  name: sawtooth-validator
