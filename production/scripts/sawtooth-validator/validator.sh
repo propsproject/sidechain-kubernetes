@@ -1,77 +1,67 @@
+#!/bin/sh
+apt-get update
+apt-get install bash curl -y
+
 #!/bin/bash
 
-if [ ! -d "$SAWTOOTH_HOME/logs" ]; then
+if [ ! -e "$SAWTOOTH_HOME/logs" ]; then
     mkdir -p $SAWTOOTH_HOME/logs
 fi
 
-if [ ! -d "$SAWTOOTH_HOME/keys" ]; then
+if [ ! -e "$SAWTOOTH_HOME/keys" ]; then
     mkdir -p $SAWTOOTH_HOME/keys
 fi
 
-if [ ! -f "$SAWTOOTH_HOME/keys/validator.priv" ]; then
-    echo 'No validator private key found, generating one';
-    sawadm keygen;
-fi
-
-if [ ! -d "$SAWTOOTH_HOME/policy" ]; then
+if [ ! -e "$SAWTOOTH_HOME/policy" ]; then
     mkdir -p $SAWTOOTH_HOME/policy
 fi
 
-if [ ! -d "$SAWTOOTH_HOME/data" ]; then
+if [ ! -e "$SAWTOOTH_HOME/data" ]; then
     mkdir -p $SAWTOOTH_HOME/data
 fi
 
-if [ ! -d "$SAWTOOTH_HOME/etc" ]; then
+if [ ! -e "$SAWTOOTH_HOME/etc" ]; then
     mkdir -p $SAWTOOTH_HOME/etc
 fi
 
-if [ ! -e /opt/config-genesis.batch ]; then
-    echo "No config-genesis.batch file"
-    sawset genesis -k $SAWTOOTH_HOME/keys/validator.priv -o /opt/config-genesis.batch;
-fi
-
-if [ ! -e /opt/config.batch ]; then
-    echo "Going to create a proposal with initial settings"
-    sawset proposal create \
-    -k $SAWTOOTH_HOME/keys/validator.priv \
-    sawtooth.consensus.algorithm.name=Devmode \
-    sawtooth.consensus.algorithm.version=0.1 \
-    -o /opt/config.batch
-
-    sawadm genesis /opt/config-genesis.batch /opt/config.batch
-fi
-
-printenv
-rm $SAWTOOTH_HOME/etc/validator.toml
 if [ ! -e "$SAWTOOTH_HOME/etc/validator.toml" ]; then
-    echo "Creating a sawtooth validator.toml configuration file"
     touch $SAWTOOTH_HOME/etc/validator.toml
     echo "opentsdb_url = \"${OPENTSDB_URL}\"" >> $SAWTOOTH_HOME/etc/validator.toml
     echo "opentsdb_db = \"${OPENTSDB_DB}\"" >> $SAWTOOTH_HOME/etc/validator.toml
     echo "opentsdb_username = \"${OPENTSDB_USERNAME}\"" >> $SAWTOOTH_HOME/etc/validator.toml
     echo "opentsdb_password = \"${OPENTSDB_PW}\"" >> $SAWTOOTH_HOME/etc/validator.toml
-    echo "network_public_key = \"${NETWORK_PUBLIC_KEY}\"" >> $SAWTOOTH_HOME/etc/validator.toml
-    echo "network_private_key = \"${NETWORK_PRIVATE_KEY}\"" >> $SAWTOOTH_HOME/etc/validator.toml
     cat $SAWTOOTH_HOME/etc/validator.toml
 fi
 
+
 if [ ! -e "$SAWTOOTH_HOME/logs/validator-debug.log" ]; then
-    echo "Creating the validator-debug.log"
     touch $SAWTOOTH_HOME/logs/validator-debug.log
 fi
 
+if [ ! -e "$SAWTOOTH_HOME/keys/validator.priv" ]; then
+    sawadm keygen;
+fi
+
+if [ ! -e "$SAWTOOTH_HOME/data/block-chain-id" ]; then
+    sawadm genesis
+
+    poet enclave basename --enclave-module simulator
+    poet registration create --enclave-module simulator
+fi
+
 if [ ! -e /root/.sawtooth/keys/root.priv ]; then
-    echo "No sawtooth key was found"
+    echo "No private key was found"
     if [ -e /opt/root.priv ]; then
         echo "Fetching the key from /opt"
         mkdir -p /root/.sawtooth/keys
         cp /opt/root.priv /root/.sawtooth/keys/root.priv
         cp /opt/root.pub /root/.sawtooth/keys/root.pub
     else
-        echo "Generating a new key"
+        echo "Generating a new key and adding the key to identity allowed keys"
         sawtooth keygen root
         cp /root/.sawtooth/keys/root.priv /opt/root.priv
         cp /root/.sawtooth/keys/root.pub /opt/root.pub
+        #sawset proposal create --key /opt/sawtooth/keys/validator.priv sawtooth.identity.allowed_keys=$(cat ~/.sawtooth/keys/root.pub) --url http://sawtooth-restapi:8008
     fi
 fi
 
@@ -86,11 +76,11 @@ format = "[%(asctime)s.%(msecs)03d [%(threadName)s] %(module)s %(levelname)s] %(
 datefmt = "%H:%M:%S"
 
 [formatters.json]
-format = "{\"timestamp\":\"%(asctime)s.%(msecs)03d\",\"app\":\"sidechain\",\"env\":\"staging\",\"name\":\"validator\",\"module\":\"%(module)s\",\"levelname\":\"%(levelname)s\",\"message\":\"%(message)s\"}"
+format = "{\"timestamp\":\"%(asctime)s.%(msecs)03d\",\"app\":\"sidechain\",\"env\":\"production\",\"name\":\"validator\",\"module\":\"%(module)s\",\"levelname\":\"%(levelname)s\",\"message\":\"%(message)s\"}"
 datefmt = "%Y-%m-%dT%H:%M:%S"
 
 [formatters.newformat]
-format = "[%(asctime)s.%(msecs)03d] [%(levelname)s] [sidechain] [%(module)s] [staging] %(message)s"
+format = "[%(asctime)s.%(msecs)03d] [%(levelname)s] [sidechain] [%(module)s] [production] %(message)s"
 datefmt = "%Y-%m-%dT%H:%M:%S"
 
 [handlers.debugrotate]
@@ -114,9 +104,10 @@ handlers = [ "debug"]
 EOF
 
 sawtooth-validator  \
-    --endpoint tcp://validator.staging.sidechain.propsproject.io:8800 \
+    --endpoint tcp://validator.sidechain.propsproject.io:8800 \
     --bind component:tcp://eth0:4004 \
     --bind network:tcp://eth0:8800 \
     --bind consensus:tcp://eth0:5050 \
+    --scheduler parallel \
     --opentsdb-url http://sawtooth-metrics:8086 \
     --opentsdb-db metrics
