@@ -16,7 +16,6 @@ spec:
     spec:
       nodeSelector:
         nodetier: "1"
-
       containers:
         - name: sawtooth-validator
           image: hyperledger/sawtooth-validator:1.0.5

@@ -14,6 +14,8 @@ spec:
       labels:
         app: sawtooth-shell
     spec:
+      nodeSelector:
+        nodetier: "1"
       containers:
         - name: sawtooth-shell
           image: hyperledger/sawtooth-shell:1.0.5

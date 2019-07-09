@@ -9,6 +9,8 @@ spec:
     spec:
       template:
         spec:
+          nodeSelector:
+            nodetier: "1"
           restartPolicy: OnFailure
           containers:
           - name: submit-rewards
