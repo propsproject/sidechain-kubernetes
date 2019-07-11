@@ -47,8 +47,8 @@ fi
 
 if [ ! -e "/opt/poet.batch" ]; then
     echo "[CREATING] Poet genesis batch file"
-    poet enclave measurement >> /opt/poet-enclave-measurement;
-    poet enclave basename --enclave-module simulator >> /opt/poet-enclave-basename
+
+    poet enclave basename --enclave-module simulator
     poet registration create --enclave-module simulator -k /opt/sawtooth/keys/validator.priv -o /opt/poet.batch
 fi
 
@@ -76,7 +76,8 @@ if [ ! -e /opt/config.batch ]; then
     echo "[CREATING] Creating a config.batch file"
     sawset proposal create \
     -k $SAWTOOTH_HOME/keys/validator.priv \
-    sawtooth.validator.transaction_families='[{"family": "pending-earnings", "version": "1.0"},{"family":"sawtooth_settings","version":"1.0"},{"family":"sawtooth_identity","version":"1.0"},{"family":"sawtooth_validator_registry","version":"1.0"}]' \
+    sawtooth.consensus.algorithm.name=PoET \
+    sawtooth.consensus.algorithm.version=0.1 \
     -o /opt/config.batch
 
     sawadm genesis /opt/config-genesis.batch /opt/config.batch /opt/poet.batch
