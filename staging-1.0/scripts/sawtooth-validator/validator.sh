@@ -78,6 +78,7 @@ if [ ! -e /opt/config.batch ]; then
     -k $SAWTOOTH_HOME/keys/validator.priv \
     sawtooth.consensus.algorithm.name=PoET \
     sawtooth.consensus.algorithm.version=0.1 \
+    sawtooth.settings.vote.authorized_keys=$(cat ~/.sawtooth/keys/root.pub),$(cat /opt/sawtooth/keys/validator.pub) \
     -o /opt/config.batch
 
     sawadm genesis /opt/config-genesis.batch /opt/config.batch
