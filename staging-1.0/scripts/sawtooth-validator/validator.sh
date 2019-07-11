@@ -25,6 +25,7 @@ if [ ! -e "$SAWTOOTH_HOME/etc" ]; then
 fi
 
 if [ ! -e "$SAWTOOTH_HOME/etc/validator.toml" ]; then
+    echo "[CREATING] Creating the validator.toml file"
     touch $SAWTOOTH_HOME/etc/validator.toml
     echo "opentsdb_url = \"${OPENTSDB_URL}\"" >> $SAWTOOTH_HOME/etc/validator.toml
     echo "opentsdb_db = \"${OPENTSDB_DB}\"" >> $SAWTOOTH_HOME/etc/validator.toml
@@ -35,18 +36,25 @@ fi
 
 
 if [ ! -e "$SAWTOOTH_HOME/logs/validator-debug.log" ]; then
+    echo "[CREATING] Creating the validator-debug.log file"
     touch $SAWTOOTH_HOME/logs/validator-debug.log
 fi
 
 if [ ! -e "$SAWTOOTH_HOME/keys/validator.priv" ]; then
+    echo "[CREATING] Creating validator priv/pub keys"
     sawadm keygen;
 fi
 
 if [ ! -e "$SAWTOOTH_HOME/data/block-chain-id" ]; then
-    sawadm genesis
+    echo "[CREATING] Poet genesis batch file"
+    poet enclave measurement >> /opt/poet-enclave-measurement;
+    poet enclave basename --enclave-module simulator >> /opt/poet-enclave-basename
+    poet registration create --enclave-module simulator -k /opt/sawtooth/keys/validator.priv -o /opt/poet.batch
+fi
 
-    poet enclave basename --enclave-module simulator
-    poet registration create --enclave-module simulator
+if [ ! -e /opt/config-genesis.batch ]; then
+    echo "[CREATING] No config-genesis.batch file"
+    sawset genesis -k $SAWTOOTH_HOME/keys/validator.priv -o /opt/config-genesis.batch;
 fi
 
 if [ ! -e /root/.sawtooth/keys/root.priv ]; then
@@ -61,9 +69,28 @@ if [ ! -e /root/.sawtooth/keys/root.priv ]; then
         sawtooth keygen root
         cp /root/.sawtooth/keys/root.priv /opt/root.priv
         cp /root/.sawtooth/keys/root.pub /opt/root.pub
-        #sawset proposal create --key /opt/sawtooth/keys/validator.priv sawtooth.identity.allowed_keys=$(cat ~/.sawtooth/keys/root.pub) --url http://sawtooth-restapi:8008
     fi
 fi
+
+if [ ! -e /opt/config.batch ]; then
+    echo "[CREATING] Creating a config.batch file"
+    sawset proposal create \
+    -k $SAWTOOTH_HOME/keys/validator.priv \
+    sawtooth.consensus.algorithm.name=PoET \
+    sawtooth.consensus.algorithm.version=0.1 \
+    sawtooth.poet.valid_enclave_measurements=$(cat /opt/poet-enclave-measurement) \
+    sawtooth.poet.valid_enclave_basenames=$(cat /opt/poet-enclave-basename) \
+    sawtooth.settings.vote.authorized_keys=$(cat ~/.sawtooth/keys/root.pub) \
+    sawtooth.identity.allowed_keys=$(cat /opt/root.pub) \
+    sawtooth.validator.transaction_families='[{"family": "pending-earnings", "version": "1.0"},{"family":"sawtooth_settings","version":"1.0"},{"family":"sawtooth_identity","version":"1.0"},{"family":"sawtooth_validator_registry","version":"1.0"}]'
+    sawtooth.publisher.max_batches_per_block=200 \
+    -o /opt/config.batch
+
+    sawadm genesis /opt/config-genesis.batch /opt/config.batch /opt/poet.batch
+else
+    rm $SAWTOOTH_HOME/data/genesis.batch
+fi
+
 
 SH="$SAWTOOTH_HOME"
 env="$ENVIRONMENT"

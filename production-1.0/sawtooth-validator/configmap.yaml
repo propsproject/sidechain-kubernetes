@@ -1,7 +1,7 @@
 ---
 apiVersion: v1
 data:
-  START_UP_SCRIPT_POET: "https://raw.githubusercontent.com/propsproject/sidechain-kubernetes/feature/sawtooth-upgrade/production-1.0/scripts/sawtooth-validator/validator.sh"
+  START_UP_SCRIPT_POET: "https://raw.githubusercontent.com/propsproject/sidechain-kubernetes/master/production-1.0/scripts/sawtooth-validator/validator.sh"
   RUST_BACKTRACE: "1"
 kind: ConfigMap
 metadata:

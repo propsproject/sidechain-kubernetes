@@ -14,6 +14,8 @@ spec:
       labels:
         app: sawtooth-metrics
     spec:
+      nodeSelector:
+        nodetier: "1"
       containers:
         - name: metrics-dashboard
           image: younow/sawtooth-stats-grafana:1.0.0
