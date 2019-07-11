@@ -83,7 +83,6 @@ if [ ! -e /opt/config.batch ]; then
     sawtooth.settings.vote.authorized_keys=$(cat ~/.sawtooth/keys/root.pub) \
     sawtooth.identity.allowed_keys=$(cat /opt/root.pub) \
     sawtooth.validator.transaction_families='[{"family": "pending-earnings", "version": "1.0"},{"family":"sawtooth_settings","version":"1.0"},{"family":"sawtooth_identity","version":"1.0"},{"family":"sawtooth_validator_registry","version":"1.0"}]' \
-    sawtooth.publisher.max_batches_per_block=200 \
     -o /opt/config.batch
 
     sawadm genesis /opt/config-genesis.batch /opt/config.batch /opt/poet.batch
