@@ -45,7 +45,7 @@ if [ ! -e "$SAWTOOTH_HOME/keys/validator.priv" ]; then
     sawadm keygen;
 fi
 
-if [ ! -e "$SAWTOOTH_HOME/data/block-chain-id" ]; then
+if [ ! -e "/opt/poet.batch" ]; then
     echo "[CREATING] Poet genesis batch file"
     poet enclave measurement >> /opt/poet-enclave-measurement;
     poet enclave basename --enclave-module simulator >> /opt/poet-enclave-basename
@@ -78,16 +78,12 @@ if [ ! -e /opt/config.batch ]; then
     -k $SAWTOOTH_HOME/keys/validator.priv \
     sawtooth.consensus.algorithm.name=PoET \
     sawtooth.consensus.algorithm.version=0.1 \
-    sawtooth.poet.valid_enclave_measurements=$(cat /opt/poet-enclave-measurement) \
-    sawtooth.poet.valid_enclave_basenames=$(cat /opt/poet-enclave-basename) \
-    sawtooth.settings.vote.authorized_keys=$(cat ~/.sawtooth/keys/root.pub) \
-    sawtooth.identity.allowed_keys=$(cat /opt/root.pub) \
+    sawtooth.settings.vote.authorized_keys=$(cat ~/.sawtooth/keys/root.pub),$(cat /opt/sawtooth/keys/validator.pub) \
+    sawtooth.identity.allowed_keys=$(cat /opt/root.pub),$(cat /opt/sawtooth/keys/validator.pub) \
     sawtooth.validator.transaction_families='[{"family": "pending-earnings", "version": "1.0"},{"family":"sawtooth_settings","version":"1.0"},{"family":"sawtooth_identity","version":"1.0"},{"family":"sawtooth_validator_registry","version":"1.0"}]' \
     -o /opt/config.batch
 
     sawadm genesis /opt/config-genesis.batch /opt/config.batch /opt/poet.batch
-else
-    rm $SAWTOOTH_HOME/data/genesis.batch
 fi
 
 
