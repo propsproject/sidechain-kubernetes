@@ -80,7 +80,9 @@ if [ ! -e /opt/config.batch ]; then
     sawtooth.consensus.algorithm.version=0.1 \
     -o /opt/config.batch
 
-    sawadm genesis /opt/config-genesis.batch /opt/config.batch /opt/poet.batch
+    sawadm genesis /opt/config-genesis.batch /opt/config.batch
+    poet enclave basename --enclave-module simulator
+    poet registration create --enclave-module simulator
 fi
 
 
