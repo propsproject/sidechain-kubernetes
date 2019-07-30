@@ -100,11 +100,11 @@ format = "[%(asctime)s.%(msecs)03d [%(threadName)s] %(module)s %(levelname)s] %(
 datefmt = "%H:%M:%S"
 
 [formatters.json]
-format = "{\"timestamp\":\"%(asctime)s.%(msecs)03d\",\"app\":\"sidechain\",\"env\":\"production\",\"name\":\"validator\",\"module\":\"%(module)s\",\"levelname\":\"%(levelname)s\",\"message\":\"%(message)s\"}"
+format = "{\"timestamp\":\"%(asctime)s.%(msecs)03d\",\"app\":\"sidechain\",\"env\":\"staging\",\"name\":\"validator\",\"module\":\"%(module)s\",\"levelname\":\"%(levelname)s\",\"message\":\"%(message)s\"}"
 datefmt = "%Y-%m-%dT%H:%M:%S"
 
 [formatters.newformat]
-format = "[%(asctime)s.%(msecs)03d] [%(levelname)s] [sidechain] [%(module)s] [production] %(message)s"
+format = "[%(asctime)s.%(msecs)03d] [%(levelname)s] [sidechain] [%(module)s] [staging] %(message)s"
 datefmt = "%Y-%m-%dT%H:%M:%S"
 
 [handlers.debugrotate]
