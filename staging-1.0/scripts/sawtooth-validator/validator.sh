@@ -108,7 +108,7 @@ format = "[%(asctime)s.%(msecs)03d] [%(levelname)s] [sidechain] [%(module)s] [st
 datefmt = "%Y-%m-%dT%H:%M:%S"
 
 [handlers.debugrotate]
-level = "DEBUG"
+level = "INFO"
 formatter = "newformat"
 class = "logging.handlers.RotatingFileHandler"
 filename = "/var/log/sawtooth/validator-debug.log"
@@ -116,13 +116,13 @@ maxBytes = 50000000
 backupCount=20
 
 [handlers.debug]
-level = "DEBUG"
+level = "INFO"
 formatter = "json"
 class = "logging.StreamHandler"
 stream = "ext://sys.stdout"
 
 [root]
-level = "DEBUG"
+level = "INFO"
 propagate = true
 handlers = [ "debug"]
 EOF
