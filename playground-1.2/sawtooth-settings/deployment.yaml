@@ -1,0 +1,26 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: sawtooth-settings
+  labels:
+    app: sawtooth-settings
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sawtooth-settings
+  template:
+    metadata:
+      labels:
+        app: sawtooth-settings
+    spec:
+      nodeSelector:
+        nodetier: "1"
+      containers:
+        - name: sawtooth-settings-tp
+          image: hyperledger/sawtooth-settings-tp:1.0.5
+          command:
+            - bash
+          args:
+            - -c
+            - "settings-tp -vv -C tcp://sawtooth-validator:4004"

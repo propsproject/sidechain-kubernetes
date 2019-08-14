@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sawtooth-poet
+  labels:
+    app: sawtooth-poet
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sawtooth-poet
+  template:
+    metadata:
+      labels:
+        app: sawtooth-poet
+    spec:
+      nodeSelector:
+        nodetier: "1"
+      containers:
+        - name: sawtooth-poet-validator-registry-tp
+          image: hyperledger/sawtooth-poet-validator-registry-tp:1.0
+          command:
+            - bash
+          args:
+            - -c
+            - "poet-validator-registry-tp -vv -C tcp://sawtooth-validator:4004"

@@ -1,0 +1,35 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: pending-props-tp
+  labels:
+    app: pending-props-tp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pending-props-tp
+  template:
+    metadata:
+      labels:
+        app: pending-props-tp
+    spec:
+      nodeSelector:
+        nodetier: "1"
+      containers:
+        - name: pending-props-tp
+          image: 774122189772.dkr.ecr.us-east-1.amazonaws.com/pending-props-tp-playground-sidechain
+          imagePullPolicy: Always
+          envFrom:
+            - secretRef:
+                name: global-secrets
+            - configMapRef:
+                name: general-config
+          env:
+          - name: NAME
+            value: "pending-props-tp"
+          command:
+            - sh
+          args:
+            - -c
+            - "/go/bin/pending-props-tp -c -f /go/bin/configs/default.json"

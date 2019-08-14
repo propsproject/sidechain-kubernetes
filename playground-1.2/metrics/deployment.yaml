@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sawtooth-metrics
+  labels:
+    app: sawtooth-metrics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sawtooth-metrics
+  template:
+    metadata:
+      labels:
+        app: sawtooth-metrics
+    spec:
+      containers:
+        - name: metrics-dashboard
+          image: younow/sawtooth-stats-grafana:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 3000
+          volumeMounts:
+            - name: sawtooth-metrics
+              mountPath: "/var/lib/grafana"
+
+        - name: metrics-influxdb
+          image: influxdb
+          env:
+            - name: INFLUXDB_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: OPENTSDB_USERNAME
+                  name: general-config
+            - name: INFLUXDB_USER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: OPENTSDB_PW
+                  name: global-secrets
+            - name: INFLUXDB_DB
+              valueFrom:
+                configMapKeyRef:
+                  key: OPENTSDB_DB
+                  name: general-config
+          envFrom:
+            - configMapRef:
+                name: metrics-config
+          ports:
+            - name: http
+              containerPort: 8086
+
+            - name: admin
+              containerPort: 8083
+
+            - name: graphite
+              containerPort: 2003
+
+          volumeMounts:
+            - name: metrics
+              mountPath: "/var/lib/influxdb"
+      volumes:
+        - name: metrics
+          emptyDir: {}
+        - name: sawtooth-metrics
+          persistentVolumeClaim:
+            claimName: sawtooth-metrics-pvc

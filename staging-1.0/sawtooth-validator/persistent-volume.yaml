@@ -4,9 +4,12 @@ metadata:
   name: pv0001
 spec:
   capacity:
-    storage: 10Gi
+    storage: 30Gi
   accessModes:
     - ReadWriteOnce
+  claimRef:
+    name: validator1
+    namespace: default
   awsElasticBlockStore:
     fsType: ext4
     volumeID: vol-0c4479650f5ca8325

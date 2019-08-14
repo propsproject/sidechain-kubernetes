@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: validator1
+  name: sawtooth-metrics-pvc
   labels:
     type: amazonEBS
 spec:
@@ -9,4 +9,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 300Gi
+      storage: 5Gi
