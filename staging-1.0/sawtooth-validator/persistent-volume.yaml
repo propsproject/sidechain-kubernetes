@@ -12,5 +12,5 @@ spec:
     namespace: default
   storageClassName: default
   awsElasticBlockStore:
-    fsType: ext4ku
+    fsType: ext4
     volumeID: vol-0c4479650f5ca8325
