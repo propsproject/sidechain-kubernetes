@@ -10,6 +10,7 @@ spec:
   claimRef:
     name: validator1
     namespace: default
+  storageClassName: default
   awsElasticBlockStore:
-    fsType: ext4
+    fsType: ext4ku
     volumeID: vol-0c4479650f5ca8325
