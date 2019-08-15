@@ -18,3 +18,4 @@ data:
   "OPENTSDB_DB": "metrics"
   "OPENTSDB_URL": "http://sawtooth-metrics:8086"
   "SECONDS_IN_DAY": "3600"
+  "REWARDS_START_TIMESTAMP": "1561248000"
