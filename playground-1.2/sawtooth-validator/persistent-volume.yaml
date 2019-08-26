@@ -7,6 +7,9 @@ spec:
     storage: 10Gi
   accessModes:
     - ReadWriteOnce
+  claimRef:
+    name: validator1
+    namespace: default
   awsElasticBlockStore:
     fsType: ext4
     volumeID: vol-03dcde207074e1057
