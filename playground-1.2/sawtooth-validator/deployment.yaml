@@ -17,38 +17,6 @@ spec:
       nodeSelector:
         nodetier: "1"
       containers:
-        - name: sawtooth-pbft-engine
-          image: hyperledger/sawtooth-pbft-engine:1.0.0
-          command:
-            - bash
-          args:
-            - -c
-            - "pbft-engine --connect tcp://$HOSTNAME:5050 -vv"
-          envFrom:
-            - configMapRef:
-                name: sawtooth-validator
-            - configMapRef:
-                name: general-config
-          volumeMounts:
-            - name: poet-shared-0
-              mountPath: "/poet-shared"
-
-        - name: sawtooth-poet-engine
-          image: hyperledger/sawtooth-poet-engine:1.1.2
-          command:
-            - bash
-          args:
-            - -c
-            - "apt-get update && apt-get -y install curl && curl -s ${START_UP_SCRIPT_POET_ENGINE} | bash"
-          envFrom:
-            - configMapRef:
-                name: sawtooth-validator
-            - configMapRef:
-                name: general-config
-          volumeMounts:
-            - name: poet-shared-0
-              mountPath: "/poet-shared"
-
         - name: sawtooth-validator
           image: hyperledger/sawtooth-validator:1.1.2
           ports:
