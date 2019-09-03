@@ -34,7 +34,7 @@ spec:
               mountPath: "/poet-shared"
 
         - name: sawtooth-poet-engine
-          image: hyperledger/sawtooth-poet-engine:1.2.2
+          image: hyperledger/sawtooth-poet-engine:1.1.2
           command:
             - bash
           args:
