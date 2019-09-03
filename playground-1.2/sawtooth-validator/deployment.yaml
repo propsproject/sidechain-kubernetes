@@ -50,7 +50,7 @@ spec:
               mountPath: "/poet-shared"
 
         - name: sawtooth-validator
-          image: hyperledger/sawtooth-validator:1.2.2
+          image: hyperledger/sawtooth-validator:1.1.2
           ports:
             - name: tp
               containerPort: 4004
