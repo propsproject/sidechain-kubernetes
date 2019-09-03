@@ -17,8 +17,24 @@ spec:
       nodeSelector:
         nodetier: "1"
       containers:
+        - name: sawtooth-pbft-engine
+          image: hyperledger/sawtooth-pbft-engine:1.0.0
+          command:
+            - bash
+          args:
+            - -c
+            - "pbft-engine -vv -C tcp://sawtooth-validator:5050"
+          envFrom:
+            - configMapRef:
+                name: sawtooth-validator
+            - configMapRef:
+                name: general-config
+          volumeMounts:
+            - name: poet-shared-0
+              mountPath: "/poet-shared"
+
         - name: sawtooth-validator
-          image: hyperledger/sawtooth-validator:1.0.5
+          image: hyperledger/sawtooth-validator:1.2.2
           ports:
             - name: tp
               containerPort: 4004
