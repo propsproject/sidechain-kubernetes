@@ -23,7 +23,7 @@ spec:
             - bash
           args:
             - -c
-            - "pbft-engine -vv -C tcp://$HOSTNAME:5050"
+            - "pbft-engine --connect tcp://$HOSTNAME:5050" -vv
           envFrom:
             - configMapRef:
                 name: sawtooth-validator
