@@ -88,6 +88,8 @@ if [ ! -e /opt/config.batch ]; then
     poet registration create --enclave-module simulator
 fi
 
+mkdir -p /poet-shared/validator-0 || true
+cp -a $SAWTOOTH_HOME/keys /poet-shared/validator-0
 
 SH="$SAWTOOTH_HOME"
 env="$ENVIRONMENT"
