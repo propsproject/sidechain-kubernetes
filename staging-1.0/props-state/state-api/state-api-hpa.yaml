@@ -1,7 +1,7 @@
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: state-api
+  name: props-state-api
   namespace: default
 spec:
   maxReplicas: 8
@@ -9,5 +9,5 @@ spec:
   scaleTargetRef:
     apiVersion: extensions/v1beta1
     kind: Deployment
-    name: state-api
+    name: props-state-api
   targetCPUUtilizationPercentage: 70

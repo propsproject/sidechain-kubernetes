@@ -1,23 +1,23 @@
 apiVersion: apps/v1beta2 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
-  name: state-api
+  name: props-state-api
   labels:
-    app: state-api
+    app: props-state-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: state-api
+      app: props-state-api
   template:
     metadata:
       labels:
-        app: state-api
+        app: props-state-api
     spec:
       nodeSelector:
         nodetier: "1"
       containers:
-      - name: state-api
+      - name: props-state-api
         image: 774122189772.dkr.ecr.us-east-1.amazonaws.com/props-state-staging-sidechain
         imagePullPolicy: Always
         env:
