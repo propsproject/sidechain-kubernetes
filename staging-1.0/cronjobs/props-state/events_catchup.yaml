@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: state-delta-catchup
 spec:
-  schedule: "*/5 * * * *"
+  schedule: "*/5 2 * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
