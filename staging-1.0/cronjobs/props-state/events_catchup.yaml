@@ -20,6 +20,13 @@ spec:
             args:
               - -c
               - "npm run events-catchup"
+            resources:
+              requests:
+                memory: 100Mi
+                cpu: 0.1
+              limits:
+                memory: 1000Mi
+                cpu: 1
             imagePullPolicy: IfNotPresent
             env:
               - name: SERVICE_NAME
