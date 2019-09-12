@@ -4,4 +4,5 @@ metadata:
   name: props-state
 data:
   "NAME": "props-state"
-  "MYSQL_HOST": "props-state-mysql.staging.sidechain.propsproject.io"  
+  "MYSQL_HOST": "props-state-mysql.staging.sidechain.propsproject.io"
+  "MYSQL_USER": "root"
