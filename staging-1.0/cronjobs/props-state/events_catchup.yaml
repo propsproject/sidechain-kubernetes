@@ -35,8 +35,10 @@ spec:
                     fieldPath: status.hostIP
             envFrom:
               - configMapRef:
-                name: props-state
+                  name: props-state-job
               - configMapRef:
-                name: general-config
+                  name: props-state
+              - configMapRef:
+                  name: general-config
               - secretRef:
-                name: global-secrets              
+                  name: global-secrets              

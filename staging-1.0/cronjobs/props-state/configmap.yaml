@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: props-state
+  name: props-state-job
 data:
   "FULL_STATE_CACHE": "true"
   "ACTIVITY_CACHE": "true"
