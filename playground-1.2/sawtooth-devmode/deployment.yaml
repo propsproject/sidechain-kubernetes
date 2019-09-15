@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sawtooth-devmode
+  labels:
+    app: sawtooth-devmode
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sawtooth-devmode
+  template:
+    metadata:
+      labels:
+        app: sawtooth-devmode
+    spec:
+      nodeSelector:
+        nodetier: "1"
+      containers:
+        - name: sawtooth-devmode-engine-rust
+          image: hyperledger/sawtooth-devmode-engine-rust:1.2.2
+          command:
+            - bash
+          args:
+            - -c
+            - "devmode-engine-rust -v -C tcp://sawtooth-validator:5050"
