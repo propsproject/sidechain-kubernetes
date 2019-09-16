@@ -33,22 +33,6 @@ spec:
             - name: poet-shared-0
               mountPath: "/poet-shared"
 
-        - name: sawtooth-poet-engine
-          image: hyperledger/sawtooth-poet-engine:1.1.2
-          command:
-            - bash
-          args:
-            - -c
-            - "apt-get update && apt-get -y install curl && curl -s ${START_UP_SCRIPT_POET_ENGINE} | bash"
-          envFrom:
-            - configMapRef:
-                name: sawtooth-validator
-            - configMapRef:
-                name: general-config
-          volumeMounts:
-            - name: poet-shared-0
-              mountPath: "/poet-shared"
-
         - name: sawtooth-devmode-engine
           image: hyperledger/sawtooth-devmode-engine-rust:1.2.2
           command:
