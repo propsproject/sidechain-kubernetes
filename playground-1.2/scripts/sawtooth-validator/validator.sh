@@ -76,7 +76,7 @@ if [ ! -e /opt/config.batch ]; then
     echo "[CREATING] Creating a config.batch file"
     sawset proposal create \
     -k $SAWTOOTH_HOME/keys/validator.priv \
-    sawtooth.consensus.algorithm.name=PoET \
+    sawtooth.consensus.algorithm.name=Devmode \
     sawtooth.consensus.algorithm.version=0.1 \
     sawtooth.settings.vote.authorized_keys=$(cat ~/.sawtooth/keys/root.pub),$(cat /opt/sawtooth/keys/validator.pub) \
     sawtooth.identity.allowed_keys=$(cat /opt/root.pub),$(cat /opt/sawtooth/keys/validator.pub) \
