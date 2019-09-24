@@ -6,3 +6,4 @@ data:
   "FULL_STATE_CACHE": "true"
   "ACTIVITY_CACHE": "true"
   "ACTIVITY_RETENTION_DAYS": "5"
+  "STATE_API_URI": "http://props-state-api:3000/state/activity/summary"
