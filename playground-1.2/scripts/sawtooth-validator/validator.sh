@@ -76,8 +76,8 @@ if [ ! -e /opt/config.batch ]; then
     echo "[CREATING] Creating a config.batch file"
     sawset proposal create \
     -k $SAWTOOTH_HOME/keys/validator.priv \
-    sawtooth.consensus.algorithm.name=Devmode \
-    sawtooth.consensus.algorithm.version=0.1 \
+    sawtooth.consensus.algorithm.name=pbft \
+    sawtooth.consensus.algorithm.version=1.0 \
     sawtooth.gossip.time_to_live=1 \
     sawtooth.consensus.pbft.members='["'$(cat ~/.sawtooth/keys/root.pub)'","'$(cat /opt/sawtooth/keys/validator.pub)'","03badb8e2cf085177d0d5c877b86cc4f8d10ab1d96eefcfcf8ecdf70839352e5df","03d907294f65f7089eaab54581ed5a3f12bef3454b81a79729c9bd171d6dcd45cd","026d4d1da9cc03a8139eb8fc97673d499f0fb7084d683091616233be398e4348ab","02d5ddfbcab65fa8694507e9a02fa24145f3ee30f1aa4ba4548d26b5292aada187"]' \
     sawtooth.settings.vote.authorized_keys=$(cat ~/.sawtooth/keys/root.pub),$(cat /opt/sawtooth/keys/validator.pub),03badb8e2cf085177d0d5c877b86cc4f8d10ab1d96eefcfcf8ecdf70839352e5df,03d907294f65f7089eaab54581ed5a3f12bef3454b81a79729c9bd171d6dcd45cd,026d4d1da9cc03a8139eb8fc97673d499f0fb7084d683091616233be398e4348ab,02d5ddfbcab65fa8694507e9a02fa24145f3ee30f1aa4ba4548d26b5292aada187 \
