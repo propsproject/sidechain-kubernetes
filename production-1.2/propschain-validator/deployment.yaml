@@ -1,0 +1,78 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: propschain-validator
+  labels:
+    app: propschain-validator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: propschain-validator
+  template:
+    metadata:
+      labels:
+        app: propschain-validator
+    spec:
+      nodeSelector:
+        nodetier: "1"
+
+      containers:
+        - name: propschain-pbft-engine
+          image: hyperledger/sawtooth-pbft-engine:1.0.0
+          command:
+            - bash
+          args:
+            - -c
+            - "pbft-engine --connect tcp://$HOSTNAME:5050 -vv"
+          envFrom:
+            - configMapRef:
+                name: propschain-validator
+            - configMapRef:
+                name: propschain-general-config
+          volumeMounts:
+            - name: poet-shared-0
+              mountPath: "/poet-shared"
+
+        - name: propschain-validator
+          image: hyperledger/sawtooth-validator:1.2.2
+          ports:
+            - name: tp
+              containerPort: 4004
+
+            - name: consensus
+              containerPort: 5050
+
+            - name: validators
+              containerPort: 8800
+          command:
+            - bash
+          args:
+            - -c
+            - "apt-get update && apt-get -y install curl && curl -s ${START_UP_SCRIPT_POET} | bash"
+          envFrom:
+            - configMapRef:
+                name: propschain-validator
+            - configMapRef:
+                name: propschain-general-config
+            - secretRef:
+                name: validator-secrets
+          env:
+            - name: OPENTSDB_PW
+              valueFrom:
+                secretKeyRef:
+                    key: OPENTSDB_PW
+                    name: global-secrets
+            - name: SAWTOOTH_HOME
+              value: "/opt/sawtooth"
+          volumeMounts:
+            - name: propschain-validator
+              mountPath: "/opt"
+            - name: poet-shared-0
+              mountPath: "/poet-shared"
+      volumes:
+        - name: propschain-validator
+          persistentVolumeClaim:
+            claimName: propschain-validator-claim
+        - name: poet-shared-0
+          emptyDir: {}

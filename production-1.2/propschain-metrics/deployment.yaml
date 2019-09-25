@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: propschain-metrics
+  labels:
+    app: propschain-metrics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: propschain-metrics
+  template:
+    metadata:
+      labels:
+        app: propschain-metrics
+    spec:
+      nodeSelector:
+        nodetier: "1"
+      containers:
+        - name: metrics-dashboard
+          image: younow/sawtooth-stats-grafana:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 3000
+          volumeMounts:
+            - name: propschain-metrics
+              mountPath: "/var/lib/grafana"
+
+        - name: metrics-influxdb
+          image: influxdb
+          env:
+            - name: INFLUXDB_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: OPENTSDB_USERNAME
+                  name: propschain-general-config
+            - name: INFLUXDB_USER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: OPENTSDB_PW
+                  name: global-secrets
+            - name: INFLUXDB_DB
+              valueFrom:
+                configMapKeyRef:
+                  key: OPENTSDB_DB
+                  name: propschain-general-config
+          envFrom:
+            - configMapRef:
+                name: metrics-config
+          ports:
+            - name: http
+              containerPort: 8086
+
+            - name: admin
+              containerPort: 8083
+
+            - name: graphite
+              containerPort: 2003
+
+          volumeMounts:
+            - name: metrics
+              mountPath: "/var/lib/influxdb"
+      volumes:
+        - name: metrics
+          emptyDir: {}
+        - name: propschain-metrics
+          persistentVolumeClaim:
+            claimName: propschain-metrics-pvc

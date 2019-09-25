@@ -1,0 +1,26 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: propschain-settings
+  labels:
+    app: propschain-settings
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: propschain-settings
+  template:
+    metadata:
+      labels:
+        app: propschain-settings
+    spec:
+      nodeSelector:
+        nodetier: "1"
+      containers:
+        - name: propschain-settings
+          image: hyperledger/sawtooth-settings-tp:1.2.2
+          command:
+            - bash
+          args:
+            - -c
+            - "settings-tp -vv -C tcp://propschain-validator:4004"

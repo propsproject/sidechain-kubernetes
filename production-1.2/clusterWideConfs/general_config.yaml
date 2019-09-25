@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: propschain-general-config
+data:
+  #system wide services info
+  "ENVIRONMENT": "production"
+  "NODE_ENV": "production"
+  "APP": "sidechain"
+  "PROPS_TOKEN_CONTRACT_ADDRESS": "0x6fe56c0bcdd471359019fcbc48863d6c3e9d4f41"
+  "VALIDATOR_URL": "tcp://propschain-validator:4004"
+  "SAWTOOTH_REST_URL": "propschain-restapi"
+  "SAWTOOTH_REST_PORT": "8008"
+  "SAWTOOTH_REST_HTTPS": "false"
+  "ETHEREUM_CONFIRMATION_BLOCKS": "15"
+  "PROPS_TOKEN_DEPLOYED_BLOCK": "7299684"
+  "OPENTSDB_USERNAME": "lrdata"
+  "OPENTSDB_DB": "metrics"
+  "OPENTSDB_URL": "http://propschain-metrics:8086"
+  "SECONDS_IN_DAY": "86400"
+  "REWARDS_START_TIMESTAMP": "1562803200"

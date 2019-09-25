@@ -1,0 +1,26 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: propschain-shell
+  labels:
+    app: propschain-shell
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: propschain-shell
+  template:
+    metadata:
+      labels:
+        app: propschain-shell
+    spec:
+      nodeSelector:
+        nodetier: "1"
+      containers:
+        - name: propschain-shell
+          image: hyperledger/sawtooth-shell:1.0.5
+          command:
+            - bash
+          args:
+            - -c
+            - "sawtooth keygen && tail -f /dev/null"

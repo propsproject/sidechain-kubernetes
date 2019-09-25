@@ -1,0 +1,31 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: propschain-metrics
+  annotations:
+    dns.alpha.kubernetes.io/external: "metrics.propschain.propsproject.io"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:us-east-1:774122189772:certificate/c96af1a8-cc58-4e3f-bf8b-b5d9790250dd"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
+    service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: '443'
+spec:
+  type: LoadBalancer
+  selector:
+    app: propschain-metrics
+  ports:
+    - name: "443"
+      protocol: TCP
+      port: 443
+      targetPort: 3000
+    - name: "8086"
+      protocol: TCP
+      port: 8086
+      targetPort: 8086
+    - name: "8083"
+      protocol: TCP
+      port: 8083
+      targetPort: 8083
+    - name: "2003"
+      protocol: TCP
+      port: 2003
+      targetPort: 2003

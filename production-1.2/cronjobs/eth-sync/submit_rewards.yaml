@@ -1,0 +1,39 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: submit-rewards
+spec:
+  schedule: "5 0 * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          nodeSelector:
+            nodetier: "1"
+          restartPolicy: OnFailure
+          containers:
+          - name: submit-rewards
+            image: 774122189772.dkr.ecr.us-east-1.amazonaws.com/props-eth-sync-production-sidechain:30
+            command:
+              - bash
+            args:
+              - -c
+              - "npm run submit-rewards"
+            imagePullPolicy: IfNotPresent
+            env:
+              - name: SERVICE_NAME
+                value: "api"
+              - name: DOGSTATSD_HOST_IP
+                valueFrom:
+                  fieldRef:
+                    fieldPath: status.hostIP
+            envFrom:
+              - secretRef:
+                  name: props-eth-sync-secrets
+              - secretRef:
+                  name: global-secrets
+              - configMapRef:
+                  name: props-eth-sync
+              - configMapRef:
+                  name: propschain-general-config

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: propschain-validator-volume
+spec:
+  capacity:
+    storage: 1000Gi
+  accessModes:
+    - ReadWriteOnce
+  claimRef:
+    name: propschain-validator-claim
+    namespace: default
+  awsElasticBlockStore:
+    fsType: ext4
+    volumeID: vol-0097f9dd257b275f1

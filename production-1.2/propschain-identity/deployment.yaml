@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: propschain-identity
+  labels:
+    app: propschain-identity
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: propschain-identity
+  template:
+    metadata:
+      labels:
+        app: propschain-identity
+    spec:
+      nodeSelector:
+        nodetier: "1"
+      containers:
+        - name: propschain-identity
+          image: hyperledger/sawtooth-identity-tp:1.2.2
+          command:
+            - bash
+          args:
+            - -c
+            - "identity-tp -vv -C tcp://propschain-validator:4004"
