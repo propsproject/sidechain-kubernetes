@@ -46,6 +46,6 @@ spec:
               - configMapRef:
                   name: props-state
               - configMapRef:
-                  name: props-general-config
+                  name: propschain-general-config
               - secretRef:
                   name: global-secrets              
