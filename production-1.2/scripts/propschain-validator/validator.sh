@@ -134,5 +134,7 @@ sawtooth-validator  \
     --bind network:tcp://eth0:8800 \
     --bind consensus:tcp://eth0:5050 \
     --scheduler parallel \
+    -P static \
+    --peers $VALIDATOR_PEER_URL
     --opentsdb-url http://propschain-metrics:8086 \
     --opentsdb-db metrics
