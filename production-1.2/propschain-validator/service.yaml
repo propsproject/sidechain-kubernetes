@@ -28,3 +28,39 @@ spec:
     - "35.174.190.243/32"
     - "10.3.0.0/16"
     - "34.198.32.89/32"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: propschain-validator-2
+  annotations:
+    dns.alpha.kubernetes.io/external: "validator2.propschain.propsproject.io"
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "300"
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+spec:
+  type: LoadBalancer
+  selector:
+    app: propschain-validator
+  ports:
+    - name: "4004"
+      protocol: TCP
+      port: 4004
+      targetPort: 4004
+    - name: "8800"
+      protocol: TCP
+      port: 8800
+      targetPort: 8800
+    - name: "5050"
+      protocol: TCP
+      port: 5050
+      targetPort: 5050
+  loadBalancerSourceRanges:
+    - "52.45.197.180/32"
+    - "52.45.115.108/32"
+    - "35.174.190.243/32"
+    - "10.3.0.0/16"
+    - "34.198.32.89/32"
+    - "34.199.224.160/32"
+    - "3.211.62.162/32"
+    - "34.197.255.79/32"
+    - "52.3.116.105/32"
