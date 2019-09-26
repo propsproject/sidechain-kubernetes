@@ -27,7 +27,7 @@ spec:
                 name: propschain-general-config
           env:
           - name: NAME
-            value: "pending-props-tp"
+            value: "propschain-tp"
           command:
             - sh
           args:
