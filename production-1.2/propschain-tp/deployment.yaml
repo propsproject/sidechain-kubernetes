@@ -18,7 +18,7 @@ spec:
         nodetier: "1"
       containers:
         - name: propschain-tp
-          image: 774122189772.dkr.ecr.us-east-1.amazonaws.com/pending-props-tp-production-sidechain
+          image: 774122189772.dkr.ecr.us-east-1.amazonaws.com/pending-props-tp-production-sidechain:2
           imagePullPolicy: Always
           envFrom:
             - secretRef:
