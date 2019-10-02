@@ -4,8 +4,8 @@ metadata:
   name: propschain-tp
   namespace: default
 spec:
-  maxReplicas: 2
-  minReplicas: 2
+  maxReplicas: 4
+  minReplicas: 4
   scaleTargetRef:
     apiVersion: extensions/v1beta1
     kind: Deployment

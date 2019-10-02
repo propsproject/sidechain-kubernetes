@@ -25,6 +25,13 @@ spec:
           args:
             - -c
             - "pbft-engine --connect tcp://$HOSTNAME:5050 -vv"
+          resources:
+            requests:
+              memory: "250Mi"
+              cpu: "100m"
+            limits:
+              memory: "350Mi"
+              cpu: "150m"
           envFrom:
             - configMapRef:
                 name: propschain-validator
@@ -50,6 +57,13 @@ spec:
           args:
             - -c
             - "apt-get update && apt-get -y install curl && curl -s ${START_UP_SCRIPT_POET} | bash"
+          resources:
+            requests:
+              memory: "750Mi"
+              cpu: "150m"
+            limits:
+              memory: "1150Mi"
+              cpu: "300m"
           envFrom:
             - configMapRef:
                 name: propschain-validator
