@@ -80,6 +80,7 @@ if [ ! -e /opt/config.batch ]; then
     sawtooth.consensus.algorithm.version=1.0 \
     sawtooth.consensus.pbft.block_publishing_delay=2000 \
     sawtooth.publisher.max_batches_per_block=200 \
+    sawtooth.gossip.time_to_live=1 \
     sawtooth.consensus.pbft.members='["'$(cat ~/.sawtooth/keys/root.pub)'","'$(cat /opt/sawtooth/keys/validator.pub)'","0365a68ddcaeb5be58de09806667e3deb8f736fa4f705d02697a352dd7aaaa60df","02a7e0b9399f3b410a6842693baf56d24aa7ea178278f369e1e8bbc9f1736045ea","0249785b8ada0b8489d78c0273ec31505fa58acc63f0c2c99e21260792d2254b8f","03c383f6fea4128cfdc5f1202de072d2c7afdd8263a7296baa12a59ca49831f0a3"]' \
     sawtooth.settings.vote.authorized_keys=$(cat ~/.sawtooth/keys/root.pub),$(cat /opt/sawtooth/keys/validator.pub),,0365a68ddcaeb5be58de09806667e3deb8f736fa4f705d02697a352dd7aaaa60df,02a7e0b9399f3b410a6842693baf56d24aa7ea178278f369e1e8bbc9f1736045ea,0249785b8ada0b8489d78c0273ec31505fa58acc63f0c2c99e21260792d2254b8f,03c383f6fea4128cfdc5f1202de072d2c7afdd8263a7296baa12a59ca49831f0a3 \
     sawtooth.identity.allowed_keys=$(cat /opt/root.pub),$(cat /opt/sawtooth/keys/validator.pub),0365a68ddcaeb5be58de09806667e3deb8f736fa4f705d02697a352dd7aaaa60df,02a7e0b9399f3b410a6842693baf56d24aa7ea178278f369e1e8bbc9f1736045ea,0249785b8ada0b8489d78c0273ec31505fa58acc63f0c2c99e21260792d2254b8f,03c383f6fea4128cfdc5f1202de072d2c7afdd8263a7296baa12a59ca49831f0a3 \
