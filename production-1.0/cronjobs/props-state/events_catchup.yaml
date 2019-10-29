@@ -1,0 +1,51 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: state-delta-catchup
+spec:
+  schedule: "*/2 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          nodeSelector:
+            nodetier: "1"
+          restartPolicy: OnFailure
+          containers:
+          - name: state-delta-catchup
+            image: 774122189772.dkr.ecr.us-east-1.amazonaws.com/props-state-staging-sidechain:10
+            command:
+              - bash
+            args:
+              - -c
+              - "npm run events-catchup"
+            resources:
+              requests:
+                memory: 100Mi
+                cpu: 0.1
+              limits:
+                memory: 1000Mi
+                cpu: 1
+            imagePullPolicy: IfNotPresent
+            env:
+              - name: SERVICE_NAME
+                value: "api"
+              - name: MYSQL_PWD
+                valueFrom:
+                  secretKeyRef:
+                    key: MYSQL_PWD
+                    name: props-state-secrets              
+              - name: DOGSTATSD_HOST_IP
+                valueFrom:
+                  fieldRef:
+                    fieldPath: status.hostIP
+            envFrom:
+              - configMapRef:
+                  name: props-state-job
+              - configMapRef:
+                  name: props-state
+              - configMapRef:
+                  name: general-config
+              - secretRef:
+                  name: global-secrets              

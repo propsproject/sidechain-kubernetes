@@ -1,0 +1,71 @@
+apiVersion: apps/v1beta2 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: props-state-api
+  labels:
+    app: props-state-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: props-state-api
+  template:
+    metadata:
+      labels:
+        app: props-state-api
+    spec:
+      nodeSelector:
+        nodetier: "1"
+      containers:
+      - name: props-state-api
+        image: 774122189772.dkr.ecr.us-east-1.amazonaws.com/props-state-staging-sidechain
+        imagePullPolicy: Always
+        env:
+        - name: SERVICE_NAME
+          value: "api"
+        - name: MYSQL_PWD
+          valueFrom:
+            secretKeyRef:
+              key: MYSQL_PWD
+              name: props-state-secrets
+        - name: DOGSTATSD_HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        envFrom:
+        - configMapRef:
+            name: props-state
+        - configMapRef:
+            name: general-config
+        - secretRef:
+            name: global-secrets
+        ports:
+        - containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: /state/ping
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /state/ping
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 60
+        resources:
+          requests:
+            memory: 100Mi
+            cpu: 0.1
+          limits:
+            memory: 1000Mi
+            cpu: 1
+      - name: redis
+        image: redis:4.0-alpine
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: 250m
+            memory: 50Mi
+        ports:
+        - containerPort: 6379

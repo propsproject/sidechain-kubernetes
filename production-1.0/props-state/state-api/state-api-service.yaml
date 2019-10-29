@@ -1,0 +1,31 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: props-state-api
+  annotations:
+    dns.alpha.kubernetes.io/external: "state.sidechain.propsproject.io"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:us-east-1:774122189772:certificate/ac83b6fe-4bdc-4392-84ce-0cea5e692b50"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
+    service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: '443'
+spec:
+  type: LoadBalancer
+  selector:
+    app: props-state-api
+  ports:
+    - name: "nodejs-ext"
+      protocol: TCP
+      port: 443
+      targetPort: 3000
+    - name: "nodejs-internal"
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+  loadBalancerSourceRanges:
+    - "34.198.32.89/32"
+    - "10.2.0.0/16"
+    - "3.87.177.84/32"
+    - "52.202.115.169/32"
+    - "18.210.158.1/32"
+    - "35.169.37.209/32"
+    - "3.220.181.192/32"
