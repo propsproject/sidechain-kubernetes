@@ -127,6 +127,11 @@ propagate = true
 handlers = [ "debug"]
 EOF
 
+# Jon + Sagi Changes
+mv /usr/lib/python3/dist-packages/sawtooth_validator/database/lmdb_nolock_database.py /usr/lib/python3/dist-packages/sawtooth_validator/database/lmdb_nolock_database.backup.py
+sed 's/1024\**4/(1024**4)*2/g' /usr/lib/python3/dist-packages/sawtooth_validator/database/lmdb_nolock_database.backup.py > /usr/lib/python3/dist-packages/sawtooth_validator/database/lmdb_nolock_database.py
+# End Changes
+
 sawtooth-validator  \
     --endpoint tcp://validator.sidechain.propsproject.io:8800 \
     --bind component:tcp://eth0:4004 \
