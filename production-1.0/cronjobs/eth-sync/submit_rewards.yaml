@@ -14,7 +14,7 @@ spec:
           restartPolicy: OnFailure
           containers:
           - name: submit-rewards
-            image: 774122189772.dkr.ecr.us-east-1.amazonaws.com/props-eth-sync-production-sidechain:30
+            image: 774122189772.dkr.ecr.us-east-1.amazonaws.com/props-eth-sync-production-sidechain:64
             command:
               - bash
             args:
