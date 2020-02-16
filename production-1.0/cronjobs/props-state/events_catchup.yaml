@@ -14,7 +14,7 @@ spec:
           restartPolicy: OnFailure
           containers:
           - name: state-delta-catchup
-            image: 774122189772.dkr.ecr.us-east-1.amazonaws.com/props-state-production-sidechain:7
+            image: 774122189772.dkr.ecr.us-east-1.amazonaws.com/props-state-production-sidechain:16
             command:
               - bash
             args:
