@@ -7,3 +7,5 @@ data:
   "ETHERSCAN_URL": "https://api-rinkeby.etherscan.io/api"
   "ETHERSCAN_API_KEY": "4PRD1Q2QN29CJAQPV31M4S1BQ68Z14G67F"
   "STATE_API_URI": "http://props-state-api:3000/state/activity/summary"
+  "GAS_PRICE": "0.4"
+  "SUBMIT_REWARDS_RETRY_GAS_INC": "0.4"
