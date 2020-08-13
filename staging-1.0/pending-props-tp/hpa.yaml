@@ -4,8 +4,8 @@ metadata:
   name: pending-props-tp
   namespace: default
 spec:
-  maxReplicas: 2
-  minReplicas: 2
+  maxReplicas: 1
+  minReplicas: 1
   scaleTargetRef:
     apiVersion: extensions/v1beta1
     kind: Deployment
