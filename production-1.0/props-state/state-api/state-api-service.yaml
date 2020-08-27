@@ -20,16 +20,4 @@ spec:
     - name: "nodejs-internal"
       protocol: TCP
       port: 3000
-      targetPort: 3000
-  loadBalancerSourceRanges:
-    - "34.198.32.89/32"
-    - "10.2.0.0/16"
-    - "3.87.177.84/32"
-    - "52.202.115.169/32"
-    - "18.210.158.1/32"
-    - "35.169.37.209/32"
-    - "3.220.181.192/32"
-    - "52.205.2.219/32" #Peerstream
-    - "18.211.210.204/32" #Coinfund
-    - "35.153.125.214/32" #YouNow
-    
+      targetPort: 3000  
